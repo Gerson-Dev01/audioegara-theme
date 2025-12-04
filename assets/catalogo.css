@@ -1,0 +1,9 @@
+.catalog-container { padding: 3rem 1rem; }
+.catalog-header { text-align: center; margin-bottom: 2rem; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+.product-card { background: #fff; border: 1px solid #eee; border-radius: 10px; overflow: hidden; text-align: center; padding: 1rem; transition: 0.3s; }
+.product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-3px); }
+.product-img { width: 100%; height: 200px; object-fit: cover; }
+.product-price { font-weight: bold; margin: 0.5rem 0; }
+.btn-add { background: #2563eb; color: white; border: none; border-radius: 6px; padding: 0.5rem 1rem; cursor: pointer; transition: 0.3s; }
+.btn-add:hover { background: #1d4ed8; }

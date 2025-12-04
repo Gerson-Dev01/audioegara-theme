@@ -1,0 +1,728 @@
+{% layout 'theme' %}
+
+{% comment %}
+  Plantilla de producto para Renta de Equipo de Audio - Integración Manual FlexCon
+{% endcomment %}
+
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<section class="product-detail-page page-width">
+  <div class="product-container">
+    <!-- Galería de Imágenes -->
+    <div class="product-gallery">
+      <div class="product-main-image">
+        {% if product.featured_image %}
+          <img 
+            id="main-product-image"
+            src="{{ product.featured_image | img_url: '800x800' }}" 
+            alt="{{ product.featured_image.alt | escape }}"
+            loading="eager"
+          >
+        {% else %}
+          <div class="product-no-image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+        {% endif %}
+        
+        <div class="product-badges">
+          {% if product.compare_at_price > product.price %}
+            <div class="product-badge badge-sale">Descuento</div>
+          {% endif %}
+          
+          {% assign product_date = product.created_at | date: '%s' %}
+          {% assign now_date = 'now' | date: '%s' %}
+          {% assign difference = now_date | minus: product_date %}
+          {% if difference < 2592000 %}
+            <div class="product-badge badge-new">Nuevo</div>
+          {% endif %}
+          
+          <div class="product-badge badge-renta">Para Renta</div>
+        </div>
+      </div>
+
+      {% if product.images.size > 1 %}
+        <div class="product-thumbnails">
+          {% for image in product.images %}
+            <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image="{{ image | img_url: '800x800' }}">
+              <img 
+                src="{{ image | img_url: '200x200' }}" 
+                alt="{{ image.alt | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Información del Producto -->
+    <div class="product-info">
+      <!-- Migas de pan -->
+      <div class="product-breadcrumb">
+        <a href="/">Inicio</a> / 
+        <a href="/collections/renta">Renta de Equipos</a> /
+        <span>{{ product.title }}</span>
+      </div>
+
+      <h1 class="product-title">{{ product.title }}</h1>
+
+      {% if product.vendor != blank %}
+        <div class="product-vendor">Marca: {{ product.vendor }}</div>
+      {% endif %}
+
+      <!-- Precio de Renta -->
+      <div class="product-price">
+        <span class="price-label">Precio por día:</span>
+        <span class="current-price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="original-price">{{ product.compare_at_price | money }}</span>
+          <span class="price-saving">
+            Ahorras {{ product.compare_at_price | minus: product.price | money }}/día
+          </span>
+        {% endif %}
+      </div>
+
+      <!-- ÁREA DE FLEXCON - INTEGRACIÓN MANUAL -->
+      <div class="flexcon-integration-area" id="flexcon-main-area">
+        <h3>Selecciona tus fechas de renta</h3>
+        
+        <!-- INTEGRACIÓN MANUAL DE FLEXCON -->
+        <div id="flexcon-manual-integration">
+          {% comment %}
+            MÉTODO 1: Usar el app block de FlexCon manualmente
+          {% endcomment %}
+          
+          <!-- Contenedor para FlexCon -->
+          <div class="flexcon-container">
+            {% comment %}
+              Esto fuerza la carga de FlexCon usando su estructura estándar
+            {% endcomment %}
+            <div data-flexcon-product="{{ product.id }}" 
+                 data-flexcon-type="rental" 
+                 id="flexcon-product-rental-{{ product.id }}">
+              <!-- FlexCon se auto-inyectará aquí -->
+            </div>
+          </div>
+          
+          <!-- Script de inicialización manual -->
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Forzar la inicialización de FlexCon
+              if (typeof window.FlexCon !== 'undefined') {
+                window.FlexCon.initProductRental({{ product.id | json }});
+              } else {
+                // Si FlexCon no está cargado, cargar sus scripts manualmente
+                loadFlexConManually();
+              }
+            });
+            
+            function loadFlexConManually() {
+              // Cargar CSS de FlexCon
+              const flexconCSS = document.createElement('link');
+              flexconCSS.rel = 'stylesheet';
+              flexconCSS.href = 'https://flexcon-app.com/widget.css'; // URL de FlexCon
+              document.head.appendChild(flexconCSS);
+              
+              // Cargar JS de FlexCon
+              const flexconJS = document.createElement('script');
+              flexconJS.src = 'https://flexcon-app.com/widget.js'; // URL de FlexCon
+              flexconJS.onload = function() {
+                console.log('FlexCon cargado manualmente');
+                if (typeof window.FlexCon !== 'undefined') {
+                  window.FlexCon.initProductRental({{ product.id | json }});
+                }
+              };
+              document.head.appendChild(flexconJS);
+            }
+          </script>
+        </div>
+        
+        <!-- Mensaje de ayuda -->
+        <div class="flexcon-help">
+          <p><strong>Nota:</strong> Selecciona las fechas de inicio y fin de tu renta en el calendario.</p>
+        </div>
+      </div>
+
+      {% if product.available %}
+        {% if product.variants.first.inventory_quantity > 0 and product.variants.first.inventory_quantity <= 5 %}
+          <div class="low-stock">¡Solo {{ product.variants.first.inventory_quantity }} disponibles para renta!</div>
+        {% endif %}
+      {% else %}
+        <div class="out-of-stock">Equipo no disponible para renta</div>
+      {% endif %}
+
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+
+      <!-- Especificaciones Técnicas -->
+      <div class="product-specs">
+        <h3>Especificaciones Técnicas</h3>
+        <div class="specs-grid">
+          {% if product.metafields.specs.tipo_equipo != blank %}
+            <div class="spec-item">
+              <span class="spec-label">Tipo de Equipo:</span>
+              <span class="spec-value">{{ product.metafields.specs.tipo_equipo }}</span>
+            </div>
+          {% endif %}
+          
+          {% if product.metafields.specs.potencia != blank %}
+            <div class="spec-item">
+              <span class="spec-label">Potencia:</span>
+              <span class="spec-value">{{ product.metafields.specs.potencia }}</span>
+            </div>
+          {% endif %}
+          
+          {% if product.metafields.specs.conectividad != blank %}
+            <div class="spec-item">
+              <span class="spec-label">Conectividad:</span>
+              <span class="spec-value">{{ product.metafields.specs.conectividad }}</span>
+            </div>
+          {% endif %}
+          
+          {% if product.metafields.specs.incluye != blank %}
+            <div class="spec-item">
+              <span class="spec-label">Incluye:</span>
+              <span class="spec-value">{{ product.metafields.specs.incluye }}</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Información de Renta -->
+      <div class="rental-info">
+        <h3>Información de la Renta</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <div>
+              <strong>Entrega y Recolección</strong>
+              <p>Coordinamos la entrega y recolección del equipo</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <div>
+              <strong>Seguro Incluido</strong>
+              <p>Todos nuestros equipos incluyen seguro contra daños</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <div>
+              <strong>Equipos Calibrados</strong>
+              <p>Todos los equipos son revisados y calibrados antes de cada renta</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-detail-page {
+    padding: var(--spacing-xl) 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .page-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  /* Galería de Imágenes */
+  .product-gallery {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  }
+
+  .product-main-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #f5f5f5;
+  }
+
+  .product-main-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .product-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .thumbnail {
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    background: #f5f5f5;
+  }
+
+  .thumbnail.active {
+    border-color: #2563eb;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Información del Producto */
+  .product-info {
+    padding: 0 20px;
+  }
+
+  .product-breadcrumb {
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  .product-breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+  }
+
+  .product-breadcrumb a:hover {
+    color: #2563eb;
+  }
+
+  .product-title {
+    font-family: inherit;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1f2937;
+    line-height: 1.2;
+  }
+
+  .product-vendor {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Precios */
+  .product-price {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+  }
+
+  .price-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 5px;
+  }
+
+  .current-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  .original-price {
+    text-decoration: line-through;
+    color: #6b7280;
+    margin-left: 10px;
+    font-size: 1.2rem;
+  }
+
+  .price-saving {
+    color: #e74c3c;
+    font-weight: 600;
+    margin-left: 10px;
+    display: block;
+    margin-top: 5px;
+  }
+
+  /* Área de Integración FlexCon */
+  .flexcon-integration-area {
+    margin: 30px 0;
+    border: 2px solid #2563eb;
+    border-radius: 12px;
+    padding: 24px;
+    background: #f8fafc;
+    position: relative;
+  }
+
+  .flexcon-integration-area h3 {
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    color: #1f2937;
+    text-align: center;
+  }
+
+  .flexcon-container {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .flexcon-help {
+    margin-top: 20px;
+    padding: 16px;
+    background: #eff6ff;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+  }
+
+  .flexcon-help p {
+    margin: 0;
+    color: #374151;
+    font-size: 0.9rem;
+  }
+
+  /* Estados de carga */
+  .flexcon-loading {
+    text-align: center;
+    color: #6b7280;
+    padding: 40px 20px;
+  }
+
+  .loading-spinner {
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #2563eb;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Especificaciones Técnicas */
+  .product-specs {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+
+  .product-specs h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: #1f2937;
+  }
+
+  .specs-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .spec-label {
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .spec-value {
+    color: #6b7280;
+    text-align: right;
+  }
+
+  /* Información de Renta */
+  .rental-info {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .rental-info h3 {
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    color: #1f2937;
+  }
+
+  .info-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .info-item svg {
+    color: #2563eb;
+    flex-shrink: 0;
+  }
+
+  .info-item strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #1f2937;
+  }
+
+  .info-item p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  /* Badges */
+  .product-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 2;
+  }
+
+  .product-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .badge-sale {
+    background: #e74c3c;
+  }
+
+  .badge-new {
+    background: #10b981;
+  }
+
+  .badge-renta {
+    background: #2563eb;
+  }
+
+  /* Estados */
+  .out-of-stock {
+    color: #e74c3c;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding: 12px;
+    background: #fef2f2;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+  }
+
+  .low-stock {
+    color: #f59e0b;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding: 12px;
+    background: #fffbeb;
+    border-radius: 6px;
+    border: 1px solid #fed7aa;
+  }
+
+  /* Responsive */
+  @media (max-width: 968px) {
+    .product-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .product-gallery {
+      position: static;
+    }
+
+    .product-info {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .product-detail-page {
+      padding: 40px 0;
+    }
+
+    .page-width {
+      padding: 0 15px;
+    }
+
+    .product-title {
+      font-size: 1.75rem;
+    }
+
+    .flexcon-integration-area {
+      padding: 16px;
+    }
+
+    .flexcon-container {
+      min-height: 150px;
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .product-thumbnails {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-item {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🔄 Iniciando integración manual de FlexCon...');
+  
+  // Función para inicializar FlexCon manualmente
+  function initializeFlexCon() {
+    const flexconContainer = document.querySelector('[data-flexcon-product]');
+    
+    if (!flexconContainer) {
+      console.log('❌ Contenedor FlexCon no encontrado');
+      return;
+    }
+    
+    const productId = flexconContainer.getAttribute('data-flexcon-product');
+    console.log('📦 Product ID para FlexCon:', productId);
+    
+    // Verificar si FlexCon ya está cargado
+    if (typeof window.FlexCon !== 'undefined') {
+      console.log('✅ FlexCon está disponible, inicializando...');
+      window.FlexCon.initProductRental(productId);
+    } else {
+      console.log('⚠️ FlexCon no está disponible, intentando carga manual...');
+      loadFlexConResources();
+    }
+  }
+  
+  function loadFlexConResources() {
+    // Estos son los recursos TÍPICOS de FlexCon - AJUSTA ESTAS URLs
+    const flexconResources = [
+      'https://cdn.flexconversion.com/widget.css',
+      'https://cdn.flexconversion.com/widget.js'
+    ];
+    
+    let loadedCount = 0;
+    
+    flexconResources.forEach(resource => {
+      if (resource.endsWith('.css')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = resource;
+        link.onload = checkAllLoaded;
+        document.head.appendChild(link);
+      } else if (resource.endsWith('.js')) {
+        const script = document.createElement('script');
+        script.src = resource;
+        script.onload = checkAllLoaded;
+        document.head.appendChild(script);
+      }
+    });
+    
+    function checkAllLoaded() {
+      loadedCount++;
+      if (loadedCount === flexconResources.length) {
+        console.log('✅ Todos los recursos de FlexCon cargados');
+        // Esperar a que FlexCon esté listo
+        setTimeout(() => {
+          if (typeof window.FlexCon !== 'undefined') {
+            const productId = document.querySelector('[data-flexcon-product]').getAttribute('data-flexcon-product');
+            window.FlexCon.initProductRental(productId);
+          } else {
+            console.log('❌ FlexCon aún no está disponible después de cargar recursos');
+            showFallbackMessage();
+          }
+        }, 2000);
+      }
+    }
+  }
+  
+  function showFallbackMessage() {
+    const flexconContainer = document.querySelector('[data-flexcon-product]');
+    if (flexconContainer) {
+      flexconContainer.innerHTML = `
+        <div class="flexcon-loading">
+          <p>⚠️ No se pudo cargar el sistema de reservas</p>
+          <p>Por favor, contacta al administrador o usa nuestro formulario de contacto.</p>
+          <div style="margin-top: 20px;">
+            <a href="/pages/contacto" style="background: #2563eb; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;">
+              Contactar para rentar
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  }
+  
+  // Inicializar después de un breve delay
+  setTimeout(initializeFlexCon, 1000);
+  
+  // También intentar cuando la página esté completamente cargada
+  window.addEventListener('load', function() {
+    setTimeout(initializeFlexCon, 500);
+  });
+  
+  // Cambio de imágenes en miniatura
+  const thumbnails = document.querySelectorAll('.thumbnail');
+  const mainImage = document.getElementById('main-product-image');
+  
+  if (thumbnails.length > 0 && mainImage) {
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const imageUrl = this.getAttribute('data-image');
+        mainImage.src = imageUrl;
+        
+        thumbnails.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  }
+});
+</script>

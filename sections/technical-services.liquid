@@ -1,0 +1,480 @@
+{% style %}
+  .tech-services {
+    padding: 6rem 0;
+    background-color: #111;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tech-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .tech-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 5rem;
+  }
+  
+  .tech-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: white;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tech-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary);
+  }
+  
+  .tech-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+  }
+  
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+  
+  .tech-card {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .tech-card:hover {
+    transform: translateY(-10px);
+    background: rgba(40, 40, 40, 0.8);
+    border-color: rgba(255, 85, 0, 0.3);
+  }
+  
+  .tech-card-content {
+    padding: 2.5rem;
+    position: relative;
+  }
+  
+  .tech-card-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary) 0%, #51b1e4 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tech-card-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+  }
+  
+  .tech-card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .tech-card-description {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tech-features {
+    margin-bottom: 2rem;
+  }
+  
+  .tech-feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .tech-feature svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    color: var(--primary);
+  }
+  
+  .tech-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.9rem 1.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .tech-button:hover {
+    background-color: #51b1e4;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 85, 0, 0.3);
+  }
+  
+  .tech-button svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .tech-button:hover svg {
+    transform: translateX(5px);
+  }
+  
+  .tech-contact {
+    background: linear-gradient(135deg, var(--primary) 0%, #51b1e4 100%);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+  }
+  
+  .tech-contact:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://cdn.shopify.com/s/files/1/0000/0000/files/tech-pattern.svg') center / cover;
+    opacity: 0.1;
+    z-index: 1;
+  }
+  
+  .contact-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .contact-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .contact-button {
+    display: inline-block;
+    background-color: white;
+    color: var(--primary);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .contact-button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .tech-title {
+      font-size: 2.2rem;
+    }
+    
+    .tech-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .tech-contact {
+      padding: 2rem;
+    }
+  }
+  
+  .tech-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+{% endstyle %}
+
+<section class="tech-services">
+  <div class="tech-pattern"></div>
+  
+  <div class="tech-container">
+    <div class="tech-header">
+      <h2 class="tech-title">Servicios Profesionales para tu Evento</h2>
+      <p class="tech-subtitle">En Audio Egara, convertimos cada evento en una experiencia inolvidable. Contamos con un equipo técnico especializado y equipamiento de última generación para ofrecer soluciones completas en sonido, iluminación y producción técnica.</p>
+    </div>
+    
+    <div class="tech-grid">
+      {% for block in section.blocks %}
+        <div class="tech-card">
+          <div class="tech-card-content">
+            <div class="tech-card-icon">
+              {% if block.settings.icon == 'sound' %}
+                <!-- Ícono de Sonido -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+              {% elsif block.settings.icon == 'lighting' %}
+                <!-- Ícono de Iluminación -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              {% elsif block.settings.icon == 'technical' %}
+                <!-- Ícono de Asistencia Técnica -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              {% endif %}
+            </div>
+            
+            <h3 class="tech-card-title">{{ block.settings.title }}</h3>
+            <p class="tech-card-description">{{ block.settings.description }}</p>
+            
+            <div class="tech-features">
+              {% if block.settings.feature1 != blank %}
+                <div class="tech-feature">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {{ block.settings.feature1 }}
+                </div>
+              {% endif %}
+              
+              {% if block.settings.feature2 != blank %}
+                <div class="tech-feature">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {{ block.settings.feature2 }}
+                </div>
+              {% endif %}
+              
+              {% if block.settings.feature3 != blank %}
+                <div class="tech-feature">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {{ block.settings.feature3 }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.feature4 != blank %}
+                <div class="tech-feature">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {{ block.settings.feature4 }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <a href="{{ block.settings.button_link }}" class="tech-button">
+              {{ block.settings.button_text }}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="tech-contact">
+      <h3 class="contact-title">¿Necesitas un presupuesto para tu evento?</h3>
+      <p class="contact-description">Nuestro equipo de expertos está disponible para convertir tu evento en una experiencia inolvidable. Soluciones completas en sonido, iluminación y producción técnica.</p>
+      <a href="{{ section.settings.contact_link }}" class="contact-button">
+        {{ section.settings.contact_button_text }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Servicios para Eventos",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "Texto del botón de contacto",
+      "default": "Solicitar presupuesto"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Enlace de contacto"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Servicio para eventos",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            {
+              "value": "sound",
+              "label": "Sonido"
+            },
+            {
+              "value": "lighting",
+              "label": "Iluminación"
+            },
+            {
+              "value": "technical",
+              "label": "Asistencia Técnica"
+            }
+          ],
+          "default": "sound"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del servicio",
+          "default": "Sonido y Sonorización"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Tu evento merece sonar perfecto. Ofrecemos sistemas de audio profesionales y técnicos con experiencia para todo tipo de eventos."
+        },
+        {
+          "type": "text",
+          "id": "feature1",
+          "label": "Servicio 1",
+          "default": "Conciertos, festivales y actos institucionales"
+        },
+        {
+          "type": "text",
+          "id": "feature2",
+          "label": "Servicio 2",
+          "default": "Eventos corporativos y presentaciones"
+        },
+        {
+          "type": "text",
+          "id": "feature3",
+          "label": "Servicio 3",
+          "default": "Discomóviles con DJ, luces y efectos especiales"
+        },
+        {
+          "type": "text",
+          "id": "feature4",
+          "label": "Servicio 4",
+          "default": "Karaokes con animador o alquiler de equipos"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texto del botón",
+          "default": "Consultar servicio"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Servicios para Eventos",
+      "blocks": [
+        {
+          "type": "service",
+          "settings": {
+            "icon": "sound",
+            "title": "Sonido y Sonorización",
+            "description": "Tu evento merece sonar perfecto. Ofrecemos sistemas de audio profesionales y técnicos con experiencia para todo tipo de eventos.",
+            "feature1": "Conciertos, festivales y actos institucionales",
+            "feature2": "Eventos corporativos y presentaciones",
+            "feature3": "Discomóviles con DJ, luces y efectos especiales",
+            "feature4": "Karaokes con animador o alquiler de equipos",
+            "button_text": "Consultar servicio de sonido"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "icon": "lighting",
+            "title": "Iluminación y Escenografía",
+            "description": "La luz marca la diferencia. Diseñamos y programamos shows visuales que transforman cualquier espacio.",
+            "feature1": "Iluminación profesional para espectáculos",
+            "feature2": "Programación y control de luces",
+            "feature3": "Diseño de shows personalizados (Sunlite)",
+            "feature4": "Creación de escenas y efectos sincronizados",
+            "button_text": "Consultar servicio de iluminación"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "icon": "technical",
+            "title": "Asistencia Técnica y Producción",
+            "description": "Nos encargamos de todo para que no tengas que preocuparte por nada.",
+            "feature1": "Técnicos profesionales en sonido e iluminación",
+            "feature2": "Transporte, montaje y desmontaje",
+            "feature3": "Asesoramiento técnico y soporte en directo",
+            "feature4": "Servicios por horas o por evento",
+            "button_text": "Consultar asistencia técnica"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

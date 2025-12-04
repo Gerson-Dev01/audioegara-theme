@@ -1,0 +1,229 @@
+{% style %}
+  .installations-section {
+    padding: 80px 20px;
+    background-color: #F7F7F7;
+    position: relative;
+  }
+  
+  .installations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .installations-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .installations-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .installations-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #51b1e4;
+  }
+  
+  .installations-subtitle {
+    font-size: 18px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .installations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
+  
+  .installation-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    background: white;
+  }
+  
+  .installation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+  }
+  
+  .installation-image {
+    height: 260px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .installation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .installation-card:hover .installation-image img {
+    transform: scale(1.03);
+  }
+  
+  .installation-content {
+    padding: 25px;
+  }
+  
+  .installation-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #222;
+  }
+  
+  .installation-description {
+    color: #555;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .installations-section {
+      padding: 60px 15px;
+    }
+    
+    .installations-title {
+      font-size: 28px;
+    }
+    
+    .installations-subtitle {
+      font-size: 16px;
+    }
+    
+    .installations-grid {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+    
+    .installation-image {
+      height: 220px;
+    }
+  }
+{% endstyle %}
+
+<section id="instalaciones" class="installations-section">
+  <div class="installations-container">
+    <div class="installations-header">
+      <h2 class="installations-title">{{ section.settings.titulo }}</h2>
+      <p class="installations-subtitle">{{ section.settings.subtitulo }}</p>
+    </div>
+    
+    <div class="installations-grid">
+      {% for block in section.blocks %}
+        <div class="installation-card">
+          <div class="installation-image">
+            {% if block.settings.imagen %}
+              {{ block.settings.imagen | image_url: width: 600 | image_tag:
+                loading: 'lazy',
+                alt: block.settings.titulo
+              }}
+            {% else %}
+              <div class="placeholder-image" style="background: #f5f5f5; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #ccc; font-size: 1rem;">Imagen de instalación</span>
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="installation-content">
+            <h3 class="installation-title">{{ block.settings.titulo }}</h3>
+            <p class="installation-description">{{ block.settings.descripcion }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instalaciones Audioegara",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título principal",
+      "default": "Nuestras Instalaciones"
+    },
+    {
+      "type": "text",
+      "id": "subtitulo",
+      "label": "Subtítulo",
+      "default": "Conoce nuestros espacios profesionales"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "instalacion",
+      "name": "Instalación",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "imagen",
+          "label": "Imagen (600x400px recomendado)"
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título de instalación",
+          "default": "Sala de Pruebas"
+        },
+        {
+          "type": "textarea",
+          "id": "descripcion",
+          "label": "Descripción",
+          "default": "Espacio acústicamente tratado para pruebas profesionales."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instalaciones Audioegara",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "instalacion",
+          "settings": {
+            "titulo": "Sala de Pruebas",
+            "descripcion": "Espacio acústicamente tratado para pruebas profesionales."
+          }
+        },
+        {
+          "type": "instalacion",
+          "settings": {
+            "titulo": "Área de Exhibición",
+            "descripcion": "Muestra de equipos de audio de última generación."
+          }
+        },
+        {
+          "type": "instalacion",
+          "settings": {
+            "titulo": "Taller de Reparación",
+            "descripcion": "Técnicos especializados en reparación de equipos."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

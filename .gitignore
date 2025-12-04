@@ -1,0 +1,43 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+node_modules/
+
+# Shopify CLI files
+.shopify/
+
+## Release files
+release
+*.zip
+# macOS
+.DS_Store
+__MACOSX
+
+# node / build
+node_modules/
+dist/
+build/
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+npm-debug.log
+yarn-error.log
+
+# theme toolkit / local caches
+.cache/
+.sass-cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# optional
+*.log

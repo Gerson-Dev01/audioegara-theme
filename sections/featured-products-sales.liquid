@@ -1,0 +1,375 @@
+{% style %}
+  /* Tus estilos CSS se mantienen exactamente iguales */
+  .sales-section {
+    padding: 6rem 0;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .sales-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .sales-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+  
+  .sales-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .sales-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary);
+  }
+  
+  .sales-subtitle {
+    font-size: 1.25rem;
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .sales-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .filter-button {
+    padding: 0.8rem 1.8rem;
+    border-radius: 30px;
+    background: transparent;
+    border: 2px solid #e1e1e1;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .filter-button:hover,
+  .filter-button.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+  
+  .sales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.5rem;
+  }
+  
+  .product-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    background: white;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  }
+  
+  .product-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    z-index: 2;
+  }
+  
+  .product-image {
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+  
+  .product-content {
+    padding: 1.8rem;
+  }
+  
+  .product-category {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: #333;
+  }
+  
+  .product-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 1.5rem;
+  }
+  
+  .product-compare-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .product-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .product-button {
+    flex: 1;
+    padding: 0.8rem;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .product-button-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .product-button-primary:hover {
+    background-color: #51b1e4;
+    transform: translateY(-2px);
+  }
+  
+  .product-button-secondary {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+  
+  .product-button-secondary:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .sales-cta {
+    margin-top: 5rem;
+    text-align: center;
+  }
+  
+  .cta-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.25);
+  }
+  
+  .cta-button:hover {
+    background-color: #51b1e4;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 85, 0, 0.35);
+  }
+  
+  @media (max-width: 768px) {
+    .sales-title {
+      font-size: 2.2rem;
+    }
+    
+    .sales-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .product-buttons {
+      flex-direction: column;
+    }
+    
+    .product-image {
+      height: 200px;
+    }
+  }
+{% endstyle %}
+
+<section id="productos" class="sales-section">
+  <div class="sales-container">
+    <div class="sales-header">
+      <h2 class="sales-title">Soluciones Profesionales de Audio e Iluminación</h2>
+      <p class="sales-subtitle">Distribuidores oficiales de las mejores marcas profesionales. Equipos de alta calidad para eventos, instalaciones fijas y estudios.</p>
+    </div>
+    
+    <div class="sales-filters">
+      <button class="filter-button active">Todos los Productos</button>
+      <button class="filter-button">Sonido Profesional</button>
+      <button class="filter-button">Iluminación</button>
+      <button class="filter-button">Accesorios</button>
+      <button class="filter-button">Packs Personalizados</button>
+    </div>
+    
+    <div class="sales-grid">
+      {% for product in collections[section.settings.featured_collection].products limit: section.settings.product_limit %}
+        <div class="product-card">
+          {% if product.compare_at_price > product.price %}
+            <div class="product-badge">Oferta Especial</div>
+          {% elsif product.tags contains "nuevo" %}
+            <div class="product-badge" style="background-color: #4CAF50;">Nuevo</div>
+          {% endif %}
+          
+          <a href="{{ product.url }}">
+            <div class="product-image">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title }}
+              {% else %}
+                <div style="background: #f5f5f5; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                  <span style="color: #ccc; font-size: 1rem;">Imagen del producto</span>
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          
+          <div class="product-content">
+            <div class="product-category">{{ product.vendor }}</div>
+            <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
+            <p class="product-description">{{ product.description | strip_html | truncate: 120 }}</p>
+            
+            <div class="product-price">
+              {% if product.compare_at_price > product.price %}
+                <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+              {{ product.price | money }}
+            </div>
+            
+            <div class="product-buttons">
+              <a href="{{ product.url }}" class="product-button product-button-primary">
+                Especificaciones
+              </a>
+              <form action="/cart/add" method="post">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button type="submit" class="product-button product-button-secondary">
+                  Cotizar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="sales-cta">
+      <h3 class="cta-title">¿Necesitas una solución personalizada?</h3>
+      <p style="color: #666; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Explora nuestro catálogo completo de equipos profesionales
+      </p>
+      <a href="/pages/catalogo" class="cta-button">
+        Ver Catálogo Completo
+      </a>
+      <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">
+        O llama a nuestro equipo técnico: <strong>+1 800-AUDIO-EGARA</strong>
+      </p>
+</div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productos Profesionales",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título principal",
+      "default": "Soluciones Profesionales de Audio e Iluminación"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Distribuidores oficiales de las mejores marcas profesionales. Equipos de alta calidad para eventos, instalaciones fijas y estudios."
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Colección destacada"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "label": "Número de productos",
+      "default": 8
+    },
+    {
+      "type": "url",
+      "id": "collection_link",
+      "label": "Enlace a todos los productos"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Prod. Audio/Iluminación",
+      "settings": {
+        "heading": "Soluciones Profesionales de Audio e Iluminación",
+        "subtitle": "Distribuidores oficiales de las mejores marcas profesionales"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-cotizacion",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,212 @@
+{% comment %}
+  Carrito de compras - Versión estilizada para AudioEgara-Dev
+  Todo integrado en un único archivo, con estilos incluidos.
+{% endcomment %}
+
+<section class="cart-section page-width">
+  <header class="cart-header">
+    <h1 class="cart-title">Tu carrito</h1>
+    {% if cart.item_count > 0 %}
+      <p class="cart-subtitle">Tienes {{ cart.item_count }} {{ cart.item_count | pluralize: 'artículo', 'artículos' }} en tu carrito.</p>
+    {% else %}
+      <p class="cart-empty">Tu carrito está vacío.</p>
+      <a href="/pages/catalogo" class="btn btn--primary">Ver catálogo</a>
+    {% endif %}
+  </header>
+
+  {% if cart.item_count > 0 %}
+  <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-form">
+    <div class="cart-items">
+      {% for item in cart.items %}
+        <article class="cart-item">
+          <a href="{{ item.url }}" class="cart-item__image">
+            <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}">
+          </a>
+          <div class="cart-item__details">
+            <h2 class="cart-item__title"><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+            {% if item.product.has_only_default_variant == false %}
+              <p class="cart-item__variant">{{ item.variant.title }}</p>
+            {% endif %}
+            <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+            <div class="cart-item__quantity">
+              <label for="updates_{{ forloop.index }}">Cantidad</label>
+              <input
+                id="updates_{{ forloop.index }}"
+                class="quantity-input"
+                type="number"
+                name="updates[]"
+                value="{{ item.quantity }}"
+                min="0"
+              >
+            </div>
+            <div class="cart-item__actions">
+              <a href="{{ item.url_to_remove }}" class="cart-remove">Eliminar</a>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <footer class="cart-footer">
+      <div class="cart-summary">
+        <p class="cart-total-label">Subtotal</p>
+        <p class="cart-total-value">{{ cart.total_price | money }}</p>
+      </div>
+
+      <div class="cart-buttons">
+        <button type="submit" name="update" class="btn btn--secondary">Actualizar carrito</button>
+        <button type="submit" name="checkout" class="btn btn--primary">Finalizar compra</button>
+      </div>
+    </footer>
+  </form>
+  {% endif %}
+</section>
+
+{% style %}
+.cart-section {
+  padding: 3rem 1rem;
+}
+.cart-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.cart-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.cart-subtitle {
+  color: #4b5563;
+}
+.cart-empty {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #fff;
+}
+.cart-item__image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.cart-item__details {
+  flex: 1;
+  min-width: 200px;
+}
+.cart-item__title a {
+  color: #111827;
+  text-decoration: none;
+  font-weight: 600;
+}
+.cart-item__variant {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.cart-item__price {
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 0.5rem;
+}
+.quantity-input {
+  width: 70px;
+  padding: 0.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  text-align: center;
+}
+.cart-footer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+.cart-summary {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+}
+.cart-total-label {
+  color: #374151;
+}
+.cart-total-value {
+  color: #111827;
+}
+.cart-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn--primary {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+}
+.btn--primary:hover {
+  background-color: #1d4ed8;
+}
+.btn--secondary {
+  background-color: transparent;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+.btn--secondary:hover {
+  background-color: #2563eb;
+  color: white;
+}
+.cart-remove {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #ef4444;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.cart-remove:hover {
+  text-decoration: underline;
+}
+@media (max-width: 640px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .cart-item__image img {
+    width: 100%;
+    height: auto;
+  }
+  .cart-footer {
+    align-items: center;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Carrito (AudioEgara)",
+  "settings": []
+}
+{% endschema %}

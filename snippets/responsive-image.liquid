@@ -1,0 +1,20 @@
+{%- liquid
+  assign image_class = class | default: ''
+  assign image_width = width | default: 2000
+  assign image_alt = alt | default: image.alt | escape
+  assign loading = loading | default: 'lazy'
+  assign sizes = sizes | default: '100vw'
+-%}
+
+{% if image != blank %}
+  {{
+    image
+    | image_url: width: image_width
+    | image_tag:
+      class: image_class,
+      loading: loading,
+      widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+      alt: image_alt,
+      sizes: sizes
+  }}
+{% endif %}

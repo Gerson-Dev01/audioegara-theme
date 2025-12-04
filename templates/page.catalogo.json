@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "catalogo-completo",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

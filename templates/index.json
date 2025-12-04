@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "hero-carousel": {
+      "type": "hero-carousel",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "slide_height_mobile": 500,
+        "slide_height_desktop": 700,
+        "section_spacing_mobile": 30,
+        "section_spacing_desktop": 50
+      },
+      "blocks": {
+        "block_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero-1.jpg",
+            "heading": "Bienvenido a Audio Egara",
+            "subheading": "Explora nuestra nueva colección",
+            "cta_text": "Ver más",
+            "cta_link": "/collections/all"
+          }
+        },
+        "block_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero-2.jpg",
+            "heading": "Calidad de sonido superior",
+            "subheading": "Tu música como debe escucharse",
+            "cta_text": "Descubrir",
+            "cta_link": "/collections"
+          }
+        }
+      }
+    }
+  },
+  "order": ["hero-carousel"]
+}

@@ -1,0 +1,324 @@
+{% style %}
+  .tech-service-section {
+    padding: 80px 20px;
+    background-color: #F7F7F7;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tech-service-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  
+  .tech-service-image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    aspect-ratio: 1/1;
+  }
+  
+  .tech-service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  
+  .tech-service-image:hover img {
+    transform: scale(1.03);
+  }
+  
+  .tech-service-content {
+    padding: 30px;
+  }
+  
+  .tech-service-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #333;
+    position: relative;
+  }
+  
+  .tech-service-title:after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background-color: #51b1e4;
+  }
+  
+  .tech-service-description {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .tech-service-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  
+  .tech-service-feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #444;
+  }
+  
+  .tech-service-feature-icon {
+    margin-right: 15px;
+    min-width: 24px;
+    color: #51b1e4;
+  }
+  
+  .tech-service-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .tech-service-button {
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+  
+  .tech-service-button-primary {
+    background-color: #51b1e4;
+    color: white;
+    border: 2px solid #51b1e4;
+  }
+  
+  .tech-service-button-primary:hover {
+    background-color: #51b1e4;
+    border-color: #51b1e4;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+  }
+  
+  .tech-service-button-secondary {
+    background-color: transparent;
+    color: #51b1e4;
+    border: 2px solid #51b1e4;
+  }
+  
+  .tech-service-button-secondary:hover {
+    background-color: #51b1e4;
+    color: white;
+    transform: translateY(-3px);
+  }
+  
+  /* Elemento decorativo */
+  .tech-service-decor {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 85, 0, 0.1);
+    border-radius: 50%;
+    bottom: -100px;
+    right: -100px;
+    z-index: 0;
+  }
+  
+  @media (max-width: 992px) {
+    .tech-service-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .tech-service-image {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .tech-service-content {
+      text-align: center;
+      padding: 0;
+    }
+    
+    .tech-service-title:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .tech-service-buttons {
+      justify-content: center;
+    }
+    
+    .tech-service-feature {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .tech-service-section {
+      padding: 60px 15px;
+    }
+    
+    .tech-service-title {
+      font-size: 28px;
+    }
+    
+    .tech-service-description {
+      font-size: 16px;
+    }
+    
+    .tech-service-buttons {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .tech-service-button {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<section id="servicio-tecnico" class="tech-service-section">
+  <div class="tech-service-decor"></div>
+  <div class="tech-service-container">
+    <div class="tech-service-image">
+      {% if section.settings.imagen %}
+        {{ section.settings.imagen | image_url: width: 800 | image_tag:
+          loading: 'lazy',
+          alt: section.settings.titulo
+        }}
+      {% else %}
+        <div style="background: #e0e0e0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 16px;">
+          <span style="color: #999; font-size: 18px;">Imagen del servicio técnico</span>
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="tech-service-content">
+      <h2 class="tech-service-title">{{ section.settings.titulo }}</h2>
+      <p class="tech-service-description">{{ section.settings.descripcion }}</p>
+      
+      <ul class="tech-service-features">
+        {% for block in section.blocks %}
+          <li class="tech-service-feature">
+            <span class="tech-service-feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.00002 16.2L4.80002 12L3.40002 13.4L9.00002 19L21 7.00002L19.6 5.60002L9.00002 16.2Z" fill="currentColor"/>
+              </svg>
+            </span>
+            {{ block.settings.caracteristica }}
+          </li>
+        {% endfor %}
+      </ul>
+      
+      <div class="tech-service-buttons">
+        <a href="{{ section.settings.boton_principal_url }}" class="tech-service-button tech-service-button-primary">
+          {{ section.settings.boton_principal_texto }}
+        </a>
+        <a href="{{ section.settings.boton_secundario_url }}" class="tech-service-button tech-service-button-secondary">
+          {{ section.settings.boton_secundario_texto }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Servicio Técnico",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "imagen",
+      "label": "Imagen (800x800px recomendado)"
+    },
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título",
+      "default": "Servicio Técnico Especializado"
+    },
+    {
+      "type": "textarea",
+      "id": "descripcion",
+      "label": "Descripción",
+      "default": "Ofrecemos soluciones técnicas para todo tipo de equipos de audio. Nuestro equipo de expertos está listo para ayudarte."
+    },
+    {
+      "type": "text",
+      "id": "boton_principal_texto",
+      "label": "Texto botón principal",
+      "default": "Solicitar Servicio"
+    },
+    {
+      "type": "url",
+      "id": "boton_principal_url",
+      "label": "Enlace botón principal"
+    },
+    {
+      "type": "text",
+      "id": "boton_secundario_texto",
+      "label": "Texto botón secundario",
+      "default": "Ver Servicios"
+    },
+    {
+      "type": "url",
+      "id": "boton_secundario_url",
+      "label": "Enlace botón secundario"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "caracteristica",
+      "name": "Característica",
+      "settings": [
+        {
+          "type": "text",
+          "id": "caracteristica",
+          "label": "Característica",
+          "default": "Reparación de equipos de todas las marcas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Servicio Técnico",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "caracteristica",
+          "settings": {
+            "caracteristica": "Diagnóstico gratuito"
+          }
+        },
+        {
+          "type": "caracteristica",
+          "settings": {
+            "caracteristica": "Reparación en 24-48 horas"
+          }
+        },
+        {
+          "type": "caracteristica",
+          "settings": {
+            "caracteristica": "Garantía por escrito"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

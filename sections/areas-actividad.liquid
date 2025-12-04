@@ -1,0 +1,313 @@
+{% style %}
+  .activity-areas {
+    padding: 5rem 0;
+    background-color: {{ section.settings.background_color }};
+  }
+  
+  .activity-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+  
+  .activity-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  }
+  
+  .activity-image {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .activity-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .activity-card:hover .activity-image img {
+    transform: scale(1.05);
+  }
+  
+  .activity-icon {
+    position: absolute;
+    bottom: -30px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .activity-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+  }
+  
+  .activity-content {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .activity-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .activity-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+  
+  .activity-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .activity-link:hover {
+    transform: translateX(5px);
+  }
+  
+  .activity-link svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .activity-link:hover svg {
+    transform: translateX(5px);
+  }
+  
+  @media (max-width: 768px) {
+    .activity-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .activity-image {
+      height: 180px;
+    }
+  }
+{% endstyle %}
+
+<section id="activity-areas" class="activity-areas">
+  <div class="activity-container">
+    <h2 class="section-title">{{ section.settings.heading }}</h2>
+    
+    <div class="activity-grid">
+      {% for block in section.blocks %}
+        <div class="activity-card">
+          <div class="activity-image">
+            {% if block.settings.image %}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy' }}
+            {% else %}
+              <div style="background: #f5f5f5; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #ccc; font-size: 1rem;">Imagen de área</span>
+              </div>
+            {% endif %}
+            
+            <div class="activity-icon">
+              {% if block.settings.icon == 'audio' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m-2.828-9.9a9 9 0 012.728-2.728" />
+                </svg>
+              {% elsif block.settings.icon == 'home' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              {% elsif block.settings.icon == 'commercial' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              {% elsif block.settings.icon == 'studio' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+              {% elsif block.settings.icon == 'event' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              {% elsif block.settings.icon == 'installation' %}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                </svg>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="activity-content">
+            <h3 class="activity-title">{{ block.settings.title }}</h3>
+            <p class="activity-description">{{ block.settings.description }}</p>
+            {% if block.settings.link_text and block.settings.link_url %}
+              <a href="{{ block.settings.link_url }}" class="activity-link">
+                {{ block.settings.link_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Áreas de Actividad",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título de la sección",
+      "default": "Nuestras Áreas de Actividad"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#f8f9fa"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "activity",
+      "name": "Área de actividad",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            {
+              "value": "audio",
+              "label": "Audio"
+            },
+            {
+              "value": "home",
+              "label": "Hogar"
+            },
+            {
+              "value": "commercial",
+              "label": "Comercial"
+            },
+            {
+              "value": "studio",
+              "label": "Estudio"
+            },
+            {
+              "value": "event",
+              "label": "Eventos"
+            },
+            {
+              "value": "installation",
+              "label": "Instalación"
+            }
+          ],
+          "default": "audio"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen de fondo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Sistemas de Audio Profesional"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Soluciones de audio de alta calidad para profesionales y entusiastas del sonido."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Texto del enlace",
+          "default": "Ver productos"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "URL del enlace"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Áreas de Actividad",
+      "blocks": [
+        {
+          "type": "activity",
+          "settings": {
+            "icon": "audio",
+            "title": "Audio Profesional",
+            "description": "Equipamiento de alta gama para estudios y profesionales del sonido.",
+            "link_text": "Ver productos"
+          }
+        },
+        {
+          "type": "activity",
+          "settings": {
+            "icon": "home",
+            "title": "Audio para Hogar",
+            "description": "Sistemas de sonido envolvente para disfrutar del cine en casa.",
+            "link_text": "Descubrir"
+          }
+        },
+        {
+          "type": "activity",
+          "settings": {
+            "icon": "commercial",
+            "title": "Soluciones Comerciales",
+            "description": "Sistemas de audio para comercios, restaurantes y espacios públicos.",
+            "link_text": "Ver soluciones"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

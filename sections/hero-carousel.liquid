@@ -1,0 +1,324 @@
+{% style %}
+  /* Importar CSS de Swiper */
+  @import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+
+  .hero-carousel {
+    position: relative;
+  }
+
+  .hero-slide {
+    position: relative;
+    height: 500px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-slide {
+      height: 600px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-slide {
+      height: 700px;
+    }
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .slide-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+  }
+
+  .slide-content {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .text-container {
+    max-width: 500px;
+    color: white;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 3.5rem;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+
+  .hero-button {
+    display: inline-block;
+    background-color: white;
+    color: var(--primary);
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .hero-button:hover {
+    background-color: var(--muted);
+  }
+
+  .hero-button-outline {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+  }
+
+  .hero-button-outline:hover {
+    background-color: white;
+    color: var(--primary);
+  }
+
+  /* Estilos para los botones de navegación */
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: white !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
+  .swiper-button-prev {
+    left: 20px;
+  }
+
+  .swiper-button-next {
+    right: 20px;
+  }
+
+  /* Estilos para la paginación */
+  .swiper-pagination-bullet {
+    background: white !important;
+    opacity: 0.5;
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1 !important;
+    background: var(--primary) !important;
+  }
+{% endstyle %}
+
+{% assign total_slides = section.blocks | size %}
+
+<div id="inicio" class="hero-carousel">
+  <div class="swiper hero-swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide hero-slide">
+          {% if block.settings.image %}
+            {%
+              render 'responsive-image',
+              image: block.settings.image,
+              class: 'w-full h-full'
+            %}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'w-full h-full bg-gray-200' }}
+          {% endif %}
+
+          <div class="slide-overlay"></div>
+          
+          <div class="slide-content">
+            <div class="content-wrapper">
+              <div class="text-container">
+                {% if block.settings.heading != blank %}
+                  <h1 class="hero-title">{{ block.settings.heading }}</h1>
+                {% endif %}
+                
+                {% if block.settings.subheading != blank %}
+                  <p class="hero-subtitle">{{ block.settings.subheading }}</p>
+                {% endif %}
+                
+                {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+                  <div class="flex flex-wrap gap-4">
+                    <a href="{{ block.settings.cta_link }}" class="hero-button">
+                      {{ block.settings.cta_text }}
+                    </a>
+                    {% if block.settings.secondary_cta_text != blank and block.settings.secondary_cta_link != blank %}
+                      <a href="{{ block.settings.secondary_cta_link }}" class="hero-button hero-button-outline">
+                        {{ block.settings.secondary_cta_text }}
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if total_slides > 1 %}
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Cargar Swiper JS si no está cargado
+  if (typeof Swiper === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+    script.onload = initSwiper;
+    document.head.appendChild(script);
+  } else {
+    initSwiper();
+  }
+
+  function initSwiper() {
+    new Swiper('.hero-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      speed: 1000,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Carrusel Hero",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen de fondo",
+          "info": "Recomendado: 2000x700px (relación 2.85:1)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Título del Slide"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subtítulo",
+          "default": "Subtítulo del Slide"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Texto del botón principal",
+          "default": "Ver más"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Enlace del botón principal"
+        },
+        {
+          "type": "text",
+          "id": "secondary_cta_text",
+          "label": "Texto del botón secundario",
+          "default": "Contactar"
+        },
+        {
+          "type": "url",
+          "id": "secondary_cta_link",
+          "label": "Enlace del botón secundario"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrusel Hero",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "heading": "Bienvenido a Audio Egara",
+            "subheading": "Explora nuestra nueva colección",
+            "cta_text": "Ver más",
+            "cta_link": "/collections"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "heading": "Calidad de sonido superior",
+            "subheading": "Tu música como debe escucharse",
+            "cta_text": "Descubrir",
+            "cta_link": "/products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

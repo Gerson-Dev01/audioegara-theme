@@ -1,0 +1,381 @@
+{% style %}
+  .footer {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 60px 0 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  
+  .footer-column h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #51b1e4;
+  }
+  
+  .footer-logo {
+    max-width: 180px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #b0b0b0;
+    margin-bottom: 25px;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 12px;
+  }
+  
+  .footer-links a {
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-links a:hover {
+    color: #51b1e4;
+    transform: translateX(5px);
+  }
+  
+  .footer-links a::before {
+    content: "›";
+    color: #51b1e4;
+    margin-right: 8px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+  }
+  
+  .footer-links a:hover::before {
+    transform: translateX(3px);
+  }
+  
+  .contact-info {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .contact-icon {
+    color: #51b1e4;
+    margin-right: 12px;
+    min-width: 20px;
+    margin-top: 4px;
+  }
+  
+  .contact-text {
+    color: #b0b0b0;
+    line-height: 1.6;
+  }
+  
+  .contact-text a {
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .contact-text a:hover {
+    color: #51b1e4;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+  }
+  
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #2a2a2a;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    background-color: #51b1e4;
+    transform: translateY(-3px);
+  }
+  
+  .social-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+  }
+  
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 50px auto 0;
+    padding: 25px 20px 0;
+    border-top: 1px solid #2a2a2a;
+    text-align: center;
+    color: #b0b0b0;
+    font-size: 0.9rem;
+  }
+  
+  .payment-methods {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .payment-icon {
+    width: 50px;
+    height: 30px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .payment-icon svg {
+    width: 30px;
+    height: 20px;
+    fill: #b0b0b0;
+  }
+  
+  /* Elemento decorativo */
+  .footer-decor {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 85, 0, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .footer-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    
+    .footer-column:last-child {
+      grid-column: span 2;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .footer-column:last-child {
+      grid-column: 1;
+    }
+    
+    .footer {
+      padding: 40px 0 20px;
+    }
+    
+    .footer-bottom {
+      padding-top: 20px;
+    }
+  }
+{% endstyle %}
+
+<footer class="footer">
+  <div class="footer-decor"></div>
+  <div class="footer-container">
+    <!-- Columna 1: Logo y descripción -->
+    <div class="footer-column">
+      <img src="{{ section.settings.logo | image_url: width: 180 }}" alt="{{ shop.name }}" class="footer-logo" loading="lazy">
+      <p class="footer-description">{{ section.settings.description }}</p>
+      <div class="social-links">
+        <a href="{{ section.settings.facebook_url }}" class="social-icon" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+        </a>
+        <a href="{{ section.settings.instagram_url }}" class="social-icon" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+        </a>
+        <a href="{{ section.settings.youtube_url }}" class="social-icon" aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Columna 2: Enlaces rápidos -->
+    <div class="footer-column">
+      <h3>Enlaces Rápidos</h3>
+      <ul class="footer-links">
+        {% for link in linklists[section.settings.quick_links].links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    <!-- Columna 3: Categorías -->
+    <div class="footer-column">
+      <h3>Categorías</h3>
+      <ul class="footer-links">
+        {% for collection in collections limit: 6 %}
+          <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    <!-- Columna 4: Contacto -->
+    <div class="footer-column">
+      <h3>Contacto</h3>
+      <div class="contact-info">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19 18H5C4.45 18 4 17.55 4 17V8L10.94 12.34C11.59 12.75 12.41 12.75 13.06 12.34L20 8V17C20 17.55 19.55 18 19 18ZM12 11L4 6H20L12 11Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="contact-text">
+          <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+        </div>
+      </div>
+      
+      <div class="contact-info">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.01 15.38C18.78 15.38 17.59 15.18 16.48 14.82C16.13 14.7 15.74 14.79 15.47 15.06L13.9 17.03C11.07 15.68 8.25 13.27 6.97 10.42L8.93 8.53C9.23 8.26 9.31 7.87 9.2 7.52C8.83 6.41 8.64 5.22 8.64 3.99C8.64 3.45 8.19 3 7.65 3H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21C20.72 21 21 20.37 21 19.82V16.37C21 15.83 20.55 15.38 20.01 15.38Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="contact-text">
+          <a href="tel:{{ shop.phone }}">{{ shop.phone }}</a>
+        </div>
+      </div>
+      
+      <div class="contact-info">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="contact-text">
+          {{ section.settings.address }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. Todos los derechos reservados.</p>
+    
+    <div class="payment-methods">
+      <div class="payment-icon">
+        <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa">
+          <title id="pi-visa">Visa</title>
+          <path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path>
+          <path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path>
+          <path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.3 1.3-.3H24c.1 0 .2 0 .2.2l.3 1.4c-.1 0-.2 0-.3-.1-.3-.1-.7-.2-1-.2-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-9.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"></path>
+        </svg>
+      </div>
+      <div class="payment-icon">
+        <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master">
+          <title id="pi-master">Mastercard</title>
+          <path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path>
+          <path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path>
+          <circle fill="#EB001B" cx="15" cy="12" r="7"></circle>
+          <circle fill="#F79E1B" cx="23" cy="12" r="7"></circle>
+          <path fill="#51b1e4" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path>
+        </svg>
+      </div>
+      <div class="payment-icon">
+        <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" width="38" height="24">
+          <path d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z" fill="#000" opacity=".07"></path>
+          <path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32" fill="#FFF"></path>
+          <path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.3 1.3-.3H24c.1 0 .2 0 .2.2l.3 1.4c-.1 0-.2 0-.3-.1-.3-.1-.7-.2-1-.2-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-9.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#5A6986"></path>
+        </svg>
+      </div>
+      <div class="payment-icon">
+        <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" width="38" height="24">
+          <path d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z" fill="#000" opacity=".07"></path>
+          <path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32" fill="#FFF"></path>
+          <path d="M10.9 8h.5c.1 0 .3 0 .4.1.2.1.3.2.4.4.1.2.1.4.1.7v.1c0 .2 0 .4-.1.6-.1.2-.2.4-.4.5-.1.1-.3.1-.5.1h-.4c-.1 0-.3 0-.4-.1-.2-.1-.3-.2-.4-.4-.1-.2-.1-.4-.1-.7v-.1c0-.2 0-.4.1-.6.1-.2.2-.4.4-.5.1-.1.3-.1.4-.1zm.5.7c-.1 0-.2 0-.3.1-.1.1-.1.2-.1.3v.1c0 .1 0 .2.1.3.1.1.2.1.3.1h.4c.1 0 .2 0 .3-.1.1-.1.1-.2.1-.3v-.1c0-.1 0-.2-.1-.3-.1-.1-.2-.1-.3-.1h-.4zm2.9-1.2c.1 0 .3 0 .4.1.2.1.3.2.4.4.1.2.1.4.1.7v.1c0 .2 0 .4-.1.6-.1.2-.2.4-.4.5-.1.1-.3.1-.5.1h-.4c-.1 0-.3 0-.4-.1-.2-.1-.3-.2-.4-.4-.1-.2-.1-.4-.1-.7v-.1c0-.2 0-.4.1-.6.1-.2.2-.4.4-.5.1-.1.3-.1.4-.1zm.5.7c-.1 0-.2 0-.3.1-.1.1-.1.2-.1.3v.1c0 .1 0 .2.1.3.1.1.2.1.3.1h.4c.1 0 .2 0 .3-.1.1-.1.1-.2.1-.3v-.1c0-.1 0-.2-.1-.3-.1-.1-.2-.1-.3-.1h-.4zm-5.7 4.6c0-.1-.1-.2-.2-.2h-.1c-.1 0-.2 0-.3.1l-.4.8-.4-.8c0-.1-.1-.1-.2-.1h-.1c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-1.9l.4.8c.1.1.1.1.2.1h.1c.1 0 .1 0 .2-.1l.4-.8v1.9c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-2.7zm2.6 0c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v1.8l-.8-1.8c0-.1-.1-.1-.2-.1h-.1c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-1.8l.8 1.8c0 .1.1.1.2.1h.1c.1 0 .2-.1.2-.2v-2.7zm2.5 0c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-2.7zm1.8 0c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-2.7zm1.8 0c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-2.7zm1.8 0c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-2.7z" fill="#5A6986"></path>
+          <path d="M26.8 8.3c0-.1-.1-.2-.2-.2h-.2c-.1 0-.2.1-.2.2v1.8l-.8-1.8c0-.1-.1-.1-.2-.1h-.1c-.1 0-.2.1-.2.2v2.7c0 .1.1.2.2.2h.2c.1 0 .2-.1.2-.2v-1.8l.8 1.8c0 .1.1.1.2.1h.1c.1 0 .2-.1.2-.2v-2.7z" fill="#5A6986"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Recomendado: 180px de ancho"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Especialistas en equipos de audio profesional. Ofrecemos soluciones de sonido para eventos, estudios y hogares."
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Dirección",
+      "default": "Av. Principal 123, Ciudad, País"
+    },
+    {
+      "type": "link_list",
+      "id": "quick_links",
+      "label": "Enlaces rápidos",
+      "default": "footer"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Enlace Facebook"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Enlace Instagram"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "Enlace YouTube"
+    }
+  ]
+}
+{% endschema %}

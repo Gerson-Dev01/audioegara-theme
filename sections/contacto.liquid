@@ -1,0 +1,512 @@
+{% style %}
+  /* Aislamiento de la sección de contacto */
+  #contacto {
+    padding-top: 100px !important;
+    margin-top: -100px !important;
+    scroll-margin-top: 100px !important;
+    all: initial; /* Reset drástico */
+    display: block !important;
+  }
+  
+  .ae-contact-section {
+    padding: 80px 20px !important;
+    background-color: #F7F7F7 !important;
+    position: relative !important;
+    font-family: 'Open Sans', sans-serif !important;
+    color: #333 !important;
+    box-sizing: border-box !important;
+  }
+  
+  .ae-contact-container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 60px !important;
+  }
+  
+  .ae-contact-info {
+    padding: 30px !important;
+    display: block !important;
+  }
+  
+  .ae-contact-title {
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    margin-bottom: 25px !important;
+    color: #333 !important;
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  
+  .ae-contact-title:after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: -12px !important;
+    left: 0 !important;
+    width: 80px !important;
+    height: 4px !important;
+    background-color: #51b1e4 !important;
+  }
+  
+  .ae-contact-description {
+    font-size: 18px !important;
+    color: #666 !important;
+    line-height: 1.6 !important;
+    margin-bottom: 40px !important;
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  .ae-contact-details {
+    margin-bottom: 40px !important;
+    display: block !important;
+  }
+  
+  .ae-contact-detail {
+    display: flex !important;
+    align-items: flex-start !important;
+    margin-bottom: 25px !important;
+  }
+  
+  .ae-contact-icon {
+    margin-right: 15px !important;
+    min-width: 24px !important;
+    color: #51b1e4 !important;
+    margin-top: 4px !important;
+  }
+  
+  .ae-contact-detail-content h3 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px !important;
+    color: #333 !important;
+    display: block !important;
+  }
+  
+  .ae-contact-detail-content p,
+  .ae-contact-detail-content a {
+    font-size: 16px !important;
+    color: #555 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+    display: block !important;
+  }
+  
+  .ae-contact-detail-content a:hover {
+    color: #51b1e4 !important;
+  }
+  
+  .ae-business-hours h3 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+    color: #333 !important;
+    display: block !important;
+  }
+  
+  .ae-business-hours p {
+    font-size: 16px !important;
+    color: #555 !important;
+    margin-bottom: 8px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+  
+  .ae-business-hours span {
+    font-weight: 500 !important;
+  }
+  
+  .ae-contact-form-container {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 40px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+  }
+  
+  .ae-form-title {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    margin-bottom: 25px !important;
+    color: #333 !important;
+    display: block !important;
+  }
+  
+  .ae-contact-form {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  
+  .ae-form-group {
+    margin-bottom: 15px !important;
+    display: block !important;
+  }
+  
+  .ae-form-group label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-weight: 500 !important;
+    color: #555 !important;
+    font-size: 15px !important;
+  }
+  
+  .ae-form-group input,
+  .ae-form-group textarea {
+    width: 100% !important;
+    padding: 14px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+  
+  .ae-form-group input:focus,
+  .ae-form-group textarea:focus {
+    border-color: #51b1e4 !important;
+    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.1) !important;
+    outline: none !important;
+  }
+  
+  .ae-form-group textarea {
+    min-height: 150px !important;
+    resize: vertical !important;
+  }
+  
+  .ae-form-button {
+    background-color: #51b1e4 !important;
+    color: white !important;
+    border: none !important;
+    padding: 15px 30px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    display: block !important;
+  }
+  
+  .ae-form-button:hover {
+    background-color: #51b1e4 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3) !important;
+  }
+  
+  .ae-map-container {
+    margin-top: 60px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    height: 400px !important;
+    display: block !important;
+  }
+  
+  .ae-map-container iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: block !important;
+  }
+  
+  @media (max-width: 992px) {
+    .ae-contact-container {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+    }
+    
+    .ae-contact-info {
+      padding: 0 !important;
+    }
+    
+    .ae-contact-title:after {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+    
+    .ae-contact-info,
+    .ae-contact-form-container {
+      text-align: center !important;
+    }
+    
+    .ae-contact-detail {
+      justify-content: center !important;
+    }
+    
+    .ae-business-hours p {
+      justify-content: center !important;
+      gap: 20px !important;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    #contacto {
+      padding-top: 80px !important;
+      margin-top: -80px !important;
+      scroll-margin-top: 80px !important;
+    }
+    
+    .ae-contact-section {
+      padding: 60px 15px !important;
+    }
+    
+    .ae-contact-title {
+      font-size: 28px !important;
+    }
+    
+    .ae-contact-description {
+      font-size: 16px !important;
+    }
+    
+    .ae-contact-form-container {
+      padding: 25px !important;
+    }
+    
+    .ae-map-container {
+      height: 300px !important;
+      margin-top: 40px !important;
+    }
+  }
+{% endstyle %}
+
+<section id="contacto" class="ae-contact-section">
+  <div class="ae-contact-container">
+    <div class="ae-contact-info">
+      <h2 class="ae-contact-title">{{ section.settings.titulo }}</h2>
+      <p class="ae-contact-description">{{ section.settings.descripcion }}</p>
+      
+      <div class="ae-contact-details">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'contacto' %}
+              <div class="ae-contact-detail">
+                <div class="ae-contact-icon">
+                  {% if block.settings.icono == 'ubicacion' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                  {% elsif block.settings.icono == 'telefono' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.01 15.38C18.78 15.38 17.59 15.18 16.48 14.82C16.13 14.7 15.74 14.79 15.47 15.06L13.9 17.03C11.07 15.68 8.25 13.27 6.97 10.42L8.93 8.53C9.23 8.26 9.31 7.87 9.2 7.52C8.83 6.41 8.64 5.22 8.64 3.99C8.64 3.45 8.19 3 7.65 3H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21C20.72 21 21 20.37 21 19.82V16.37C21 15.83 20.55 15.38 20.01 15.38Z" fill="currentColor"/>
+                    </svg>
+                  {% elsif block.settings.icono == 'email' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                    </svg>
+                  {% endif %}
+                </div>
+                <div class="ae-contact-detail-content">
+                  <h3>{{ block.settings.titulo }}</h3>
+                  {% if block.settings.enlace %}
+                    <a href="{{ block.settings.enlace }}">{{ block.settings.contenido }}</a>
+                  {% else %}
+                    <p>{{ block.settings.contenido }}</p>
+                  {% endif %}
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+      
+      <div class="ae-business-hours">
+        <h3>Horario de atención</h3>
+        {% for block in section.blocks %}
+          {% if block.type == 'horario' %}
+            <p>
+              <span>{{ block.settings.dias }}:</span>
+              {{ block.settings.horas }}
+            </p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="ae-contact-form-container">
+      <h3 class="ae-form-title">Envíanos un mensaje</h3>
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p class="ae-form-success">¡Gracias por tu mensaje! Te contactaremos pronto.</p>
+        {% endif %}
+        
+        <div class="ae-contact-form">
+          <div class="ae-form-group">
+            <label for="ContactFormName">Nombre completo</label>
+            <input type="text" id="ContactFormName" name="contact[name]" required>
+          </div>
+          
+          <div class="ae-form-group">
+            <label for="ContactFormEmail">Correo electrónico</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" required>
+          </div>
+          
+          <div class="ae-form-group">
+            <label for="ContactFormPhone">Teléfono</label>
+            <input type="tel" id="ContactFormPhone" name="contact[phone]">
+          </div>
+          
+          <div class="ae-form-group">
+            <label for="ContactFormMessage">Mensaje</label>
+            <textarea id="ContactFormMessage" name="contact[body]" required></textarea>
+          </div>
+          
+          <button type="submit" class="ae-form-button">Enviar mensaje</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+  
+  <div class="ae-map-container">
+    {% if section.settings.mapa_url %}
+      <iframe
+        src="{{ section.settings.mapa_url }}"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    {% else %}
+      <div style="background: #e0e0e0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999;">
+        <p>Por favor, añade la URL del mapa en la configuración</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título principal",
+      "default": "Contáctanos"
+    },
+    {
+      "type": "textarea",
+      "id": "descripcion",
+      "label": "Descripción",
+      "default": "Estamos aquí para ayudarte. Ponte en contacto con nosotros para cualquier consulta o servicio."
+    },
+    {
+      "type": "url",
+      "id": "mapa_url",
+      "label": "URL del mapa de Google Maps"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contacto",
+      "name": "Detalle de contacto",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "options": [
+            {
+              "value": "ubicacion",
+              "label": "Ubicación"
+            },
+            {
+              "value": "telefono",
+              "label": "Teléfono"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            }
+          ],
+          "default": "ubicacion"
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "Dirección"
+        },
+        {
+          "type": "text",
+          "id": "contenido",
+          "label": "Contenido",
+          "default": "Av. Principal 123, Ciudad"
+        },
+        {
+          "type": "url",
+          "id": "enlace",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    },
+    {
+      "type": "horario",
+      "name": "Horario de atención",
+      "settings": [
+        {
+          "type": "text",
+          "id": "dias",
+          "label": "Días",
+          "default": "Lunes a Viernes"
+        },
+        {
+          "type": "text",
+          "id": "horas",
+          "label": "Horas",
+          "default": "9:00 AM - 6:00 PM"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contacto",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "contacto",
+          "settings": {
+            "icono": "ubicacion",
+            "titulo": "Dirección",
+            "contenido": "Av. Principal 123, Ciudad"
+          }
+        },
+        {
+          "type": "contacto",
+          "settings": {
+            "icono": "telefono",
+            "titulo": "Teléfono",
+            "contenido": "+1 (555) 123-4567",
+            "enlace": "tel:+15551234567"
+          }
+        },
+        {
+          "type": "contacto",
+          "settings": {
+            "icono": "email",
+            "titulo": "Email",
+            "contenido": "contacto@audioegara.com",
+            "enlace": "mailto:contacto@audioegara.com"
+          }
+        },
+        {
+          "type": "horario",
+          "settings": {
+            "dias": "Lunes a Viernes",
+            "horas": "9:00 AM - 6:00 PM"
+          }
+        },
+        {
+          "type": "horario",
+          "settings": {
+            "dias": "Sábados",
+            "horas": "10:00 AM - 2:00 PM"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

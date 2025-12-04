@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Preload CSS y fuentes -->
+  <link rel="preload" href="{{ 'swiper-bundle.min.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fuentes únicas para todo el tema -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  {% render 'css-variables' %}
+
+  {{ content_for_header }}
+
+  <!-- Estilos inline críticos -->
+  <style>
+    :root {
+      --color-primary: #3B82F6;
+      --color-primary-foreground: #ffffff;
+      --color-secondary: #1E40AF;
+      --color-dark: #111827;
+      --color-light: #F3F4F6;
+      --radius: 0.625rem;
+    }
+    
+    body {
+      line-height: 1.5;
+      color: oklch(0.145 0 0);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-background text-foreground">
+  {% section 'header' %}
+  
+  <main class="flex-grow">
+    {{ content_for_layout }}
+  </main>
+  
+  {% section 'footer' %}
+
+  <!-- Scripts -->
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
+</body>
+</html>

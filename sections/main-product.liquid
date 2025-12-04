@@ -1,0 +1,247 @@
+{% comment %}
+  Sección principal - Compatible con FlexCon y variantes de producto
+  Incluye formulario, selector de variantes y zona para FlexCon
+{% endcomment %}
+{% assign dummy = '' %}
+<section class="product-detail-page page-width" id="MainProduct-{{ section.id }}" data-section="{{ section.id }}">
+  <div class="product-container">
+    <!-- Galería -->
+    <div class="product-gallery">
+      <div class="product-main-image">
+        {% if product.featured_image %}
+          <img
+            id="main-product-image"
+            src="{{ product.featured_image | img_url: '800x800' }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            loading="eager"
+          >
+        {% endif %}
+        <!-- Badges -->
+        <div class="product-badges">
+          {% if section.settings.show_rental_badge %}
+            <div class="product-badge badge-renta">Para Renta</div>
+          {% endif %}
+        </div>
+      </div>
+      {% if product.images.size > 1 %}
+        <div class="product-thumbnails">
+          {% for image in product.images %}
+            <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image="{{ image | img_url: '800x800' }}">
+              <img src="{{ image | img_url: '200x200' }}" loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <!-- INFO -->
+    <div class="product-info">
+      <form id="product-form-{{ product.id }}" action="/cart/add" method="post" enctype="multipart/form-data" data-product-id="{{ product.id }}">
+        <h1 class="product-title">{{ product.title }}</h1>
+        <div class="product-vendor">{{ product.vendor }}</div>
+
+        <!-- Precio -->
+        <div class="product-price">
+          {% if product.compare_at_price > product.price %}
+            <span class="original-price">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+          <span class="current-price">{{ product.price | money }}</span>
+        </div>
+
+        <!-- Selector de variantes (REQUERIDO para FlexCon y Shopify) -->
+        {% if product.variants.size > 1 %}
+          <div class="product-variants">
+            <label for="product-variants">Selecciona una opción:</label>
+            <select name="id" id="product-variants" class="variant-selector">
+              {% for variant in product.variants %}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  {{ variant.title }} - {{ variant.price | money }}
+                  {% unless variant.available %} (Agotado){% endunless %}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% endif %}
+
+        <!-- ZONA FLEXCON -->
+        <div id="flexcon-zone">
+          <!-- Render directo de bloques de la app -->
+          {% for block in section.blocks %}
+            {% if block.type == '@app' %}
+              <div class="flexcon-app-wrapper" {{ block.shopify_attributes }}>
+                {% render block %}
+              </div>
+            {% endif %}
+          {% endfor %}
+          <!-- Contenedor dinámico para FlexCon -->
+          <div id="flexcon-dynamic-container"></div>
+          <!-- Fallback -->
+          <div id="flexcon-fallback" class="flexcon-fallback">
+            <div class="loading-spinner"></div>
+            <h4>💡 Sistema de Rentas</h4>
+            <p>El módulo de FlexCon se está cargando…</p>
+            <a class="btn-contact" href="/pages/contacto?product={{ product.handle }}">
+              Contactar para disponibilidad
+            </a>
+            <small>Si instalaste FlexCon pero no ves el calendario, revisa su configuración.</small>
+          </div>
+        </div>
+
+        <!-- Botón de añadir al carrito (opcional, pero recomendado) -->
+        <button type="submit" name="add" class="btn-add-to-cart" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {% if product.selected_or_first_available_variant.available %}
+            Añadir al carrito
+          {% else %}
+            Agotado
+          {% endif %}
+        </button>
+
+        <!-- Descripción -->
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ⭐️ Estilos existentes (conservados) ⭐️ */
+  .product-detail-page { padding: var(--spacing-xl) 0; max-width: 1200px; margin: 0 auto; }
+  .page-width { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  /* Galería de Imágenes */
+  .product-gallery { position: sticky; top: 100px; height: fit-content; }
+  .product-main-image { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background: #f5f5f5; }
+  .product-main-image img { width: 100%; height: auto; display: block; }
+  .product-thumbnails { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .thumbnail { border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.3s ease; background: #f5f5f5; }
+  .thumbnail.active { border-color: #2563eb; }
+  .thumbnail img { width: 100%; height: auto; display: block; }
+  /* Información del Producto */
+  .product-info { padding: 0 20px; }
+  .product-title { font-family: inherit; font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: #1f2937; line-height: 1.2; }
+  .product-vendor { color: #6b7280; font-size: 1rem; margin-bottom: 20px; }
+  /* Precios */
+  .product-price { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; }
+  .current-price { font-size: 1.5rem; font-weight: 700; color: #1f2937; }
+  .original-price { text-decoration: line-through; color: #6b7280; margin-right: 10px; font-size: 1.2rem; }
+  /* Selector de variantes */
+  .product-variants { margin-bottom: 20px; }
+  .variant-selector { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; background: white; }
+  /* Área de FlexCon */
+  .flexcon-app-wrapper { border: 2px solid #2563eb; border-radius: 12px; padding: 24px; background: #f8fafc; min-height: 150px; margin-bottom: 20px; }
+  .flexcon-fallback { border: 2px dashed #d1d5db; border-radius: 12px; padding: 40px 24px; text-align: center; background: #f9fafb; }
+  .btn-contact { display: inline-block; background: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 15px; }
+  .btn-contact:hover { background: #1d4ed8; }
+  .btn-add-to-cart { width: 100%; background: #2563eb; color: white; padding: 15px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+  .btn-add-to-cart:disabled { background: #9ca3af; cursor: not-allowed; }
+  /* Badges */
+  .product-badges { position: absolute; top: 15px; left: 15px; display: flex; flex-direction: column; gap: 5px; z-index: 2; }
+  .product-badge { padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: white; }
+  .badge-renta { background: #2563eb; }
+  /* Responsive */
+  @media (max-width: 968px) {
+    .product-container { grid-template-columns: 1fr; gap: 40px; }
+    .product-gallery { position: static; }
+    .product-info { padding: 0; }
+  }
+  @media (max-width: 768px) {
+    .product-title { font-size: 1.75rem; }
+    .flexcon-app-wrapper { padding: 16px; }
+    .flexcon-fallback { padding: 30px 16px; }
+  }
+  @media (max-width: 480px) {
+    .product-thumbnails { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  /* =============================
+     GALERÍA
+  ============================== */
+  const thumbs = document.querySelectorAll(".thumbnail");
+  const mainImg = document.getElementById("main-product-image");
+  thumbs.forEach(t => {
+    t.addEventListener("click", () => {
+      thumbs.forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      mainImg.src = t.dataset.image;
+    });
+  });
+
+  /* =============================
+     SELECTOR DE VARIANTES
+  ============================== */
+  const variantSelector = document.querySelector('.variant-selector');
+  if (variantSelector) {
+    variantSelector.addEventListener('change', (e) => {
+      const variantId = e.target.value;
+      // Actualiza el input oculto del formulario
+      document.querySelector('input[name="id"]').value = variantId;
+    });
+  }
+
+  /* =============================
+     VERIFICACIÓN DE FLEXCON (MEJORADO)
+  ============================== */
+  function detectFlexCon() {
+    const selectors = [
+      '[class*="flexcon"]',
+      '[id*="flexcon"]',
+      'iframe[src*="flexcon"]',
+      '.rental-widget',
+      'div[data-product-rental]',
+      '#flexcon-dynamic-container > *'
+    ];
+    return selectors.some(sel => document.querySelector(sel));
+  }
+
+  function tryLoadFlexCon() {
+    if (detectFlexCon()) {
+      document.getElementById("flexcon-fallback").style.display = "none";
+      console.log("🎉 FlexCon detectado y renderizado correctamente");
+      return true;
+    }
+    return false;
+  }
+
+  // Verifica cada 500ms (hasta 10 intentos)
+  let attempts = 0;
+  const timer = setInterval(() => {
+    attempts++;
+    if (tryLoadFlexCon() || attempts >= 10) clearInterval(timer);
+  }, 500);
+
+  // Primera verificación rápida
+  setTimeout(tryLoadFlexCon, 300);
+});
+</script>
+
+{% schema %}
+{
+  "name": "Main product",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_rental_badge",
+      "label": "Mostrar badge de renta",
+      "default": true
+    }
+  ],
+  "presets": [
+    { "name": "Main product", "category": "Product" }
+  ]
+}
+{% endschema %}
