@@ -861,6 +861,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   const filterSelect = document.getElementById('catalog-filter');
   const sortSelect = document.getElementById('catalog-sort');
+  const productCards = document.querySelectorAll('.product-card');
 
   // Leer parámetros de la URL al cargar la página
   const urlParams = new URLSearchParams(window.location.search);
@@ -870,23 +871,49 @@ document.addEventListener('DOMContentLoaded', function() {
   // Seleccionar el filtro y ordenamiento según los parámetros de la URL
   if (filterParam) {
     filterSelect.value = filterParam;
+    filterProducts(filterParam);
   }
   if (sortParam) {
     sortSelect.value = sortParam;
   }
 
+  // Función para filtrar productos sin recargar la página
+  function filterProducts(filter) {
+    let visibleCount = 0;
+    productCards.forEach(card => {
+      const type = card.getAttribute('data-product-type');
+      const shouldShow = filter === 'all' || filter === type;
+      if (shouldShow) {
+        card.style.display = 'block';
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+        }, 50);
+        visibleCount++;
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+          card.style.display = 'none';
+        }, 300);
+      }
+    });
+    showEmptyState(visibleCount);
+  }
+
   // Evento change del filtro
   filterSelect.addEventListener('change', function() {
     const filter = this.value;
-    const sort = sortSelect.value;
-    window.location.href = `/collections/alquiler?page=1&filter=${filter}&sort_by=${sort}`;
+    filterProducts(filter);
+    // Actualizar la URL sin recargar la página
+    updateURL('filter', filter);
   });
 
   // Evento change del ordenamiento
   sortSelect.addEventListener('change', function() {
     const sort = this.value;
-    const filter = filterSelect.value;
-    window.location.href = `/collections/alquiler?page=1&filter=${filter}&sort_by=${sort}`;
+    // Redirigir a la primera página con el ordenamiento aplicado
+    window.location.href = `/collections/alquiler?sort_by=${sort}`;
   });
 
   // Manejar clics en los enlaces de paginación
@@ -896,14 +923,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = new URL(this.href);
       const filter = filterSelect.value;
       const sort = sortSelect.value;
-
       // Añadir parámetros de filtro y ordenamiento a la URL de paginación
       url.searchParams.set('filter', filter);
       url.searchParams.set('sort_by', sort);
-
       window.location.href = url.toString();
     });
   });
+
+  // Función para actualizar la URL sin recargar la página
+  function updateURL(param, value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set(param, value);
+    window.history.pushState({}, '', url.toString());
+  }
 
   // Función para mostrar estado vacío
   function showEmptyState(visibleCount) {
@@ -923,12 +955,14 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.reset-filter').addEventListener('click', function(e) {
         e.preventDefault();
         filterSelect.value = 'all';
-        filterSelect.dispatchEvent(new Event('change'));
+        filterProducts('all');
+        updateURL('filter', 'all');
       });
     }
   }
 });
 </script>
+
 
 
 {% schema %}
