@@ -112,6 +112,32 @@
     flex-wrap: wrap;
   }
 
+  .filter-select {
+    padding: 0.875rem 1.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #475569;
+    background: white;
+    min-width: 200px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpath d='M7 10l5 5 5-5'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+
   .filter-button {
     padding: 0.875rem 1.75rem;
     background: transparent;
@@ -657,13 +683,16 @@
     <!-- Toolbar Mejorada -->
     <div class="catalog-toolbar">
       <div class="catalog-filters">
-        <button class="filter-button active" data-filter="all">Todos para Alquiler</button>
-        <button class="filter-button" data-filter="microfono">Micrófonos</button>
-        <button class="filter-button" data-filter="mezcladora">Mezcladoras</button>
-        <button class="filter-button" data-filter="altavoz">Altavoces</button>
-        <button class="filter-button" data-filter="amplificador">Amplificadores</button>
-        <button class="filter-button" data-filter="iluminacion">Iluminación</button>
+        <select class="filter-select" id="catalog-filter">
+          <option value="all" selected>Todos para Alquiler</option>
+          <option value="microfono">Micrófonos</option>
+          <option value="mezcladora">Mezcladoras</option>
+          <option value="altavoz">Altavoces</option>
+          <option value="amplificador">Amplificadores</option>
+          <option value="iluminacion">Iluminación</option>
+        </select>
       </div>
+
 
       <div class="catalog-sort">
         <span class="sort-label">Ordenar por:</span>
@@ -784,10 +813,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   /* ===== FILTRADO MEJORADO ===== */
-  const filterButtons = document.querySelectorAll('.filter-button');
+  /* const filterButtons = document.querySelectorAll('.filter-button'); */
+  const filterSelect = document.getElementById('catalog-filter');
   const productCards = document.querySelectorAll('.product-card');
 
-  filterButtons.forEach(button => {
+/*  filterButtons.forEach(button => {
     button.addEventListener('click', function() {
       const filter = this.getAttribute('data-filter');
       
@@ -827,6 +857,35 @@ document.addEventListener('DOMContentLoaded', function() {
       showEmptyState(visibleCount);
     });
   });
+*/
+  
+filterSelect.addEventListener('change', function() {
+  const filter = this.value;
+  let visibleCount = 0;
+
+  productCards.forEach(card => {
+    const type = card.getAttribute('data-product-type');
+    const shouldShow = filter === 'all' || filter === type;
+
+    if (shouldShow) {
+      card.style.display = 'block';
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      }, 50);
+      visibleCount++;
+    } else {
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.8)';
+      setTimeout(() => {
+        card.style.display = 'none';
+      }, 300);
+    }
+  });
+
+  showEmptyState(visibleCount);
+});
+
 
   /* ===== ORDENAMIENTO ACTUALIZADO ===== */
   const sortSelect = document.getElementById('catalog-sort');
@@ -843,7 +902,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* ===== FUNCIÓN PARA ESTADO VACÍO ===== */
-  function showEmptyState(visibleCount) {
+/*  function showEmptyState(visibleCount) {
     // Remover mensaje anterior si existe
     const existingMessage = document.querySelector('.no-products-message');
     if (existingMessage) existingMessage.remove();
@@ -867,7 +926,33 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('[data-filter="all"]').click();
       });
     }
+  } */
+  
+
+  function showEmptyState(visibleCount) {
+  const existingMessage = document.querySelector('.no-products-message');
+  if (existingMessage) existingMessage.remove();
+
+  if (visibleCount === 0) {
+    const emptyMessage = document.createElement('div');
+    emptyMessage.className = 'no-products-message';
+    emptyMessage.innerHTML = `
+      <div style="text-align: center; padding: 3rem; color: #64748b;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;"></div>
+        <h3 style="color: #475569; margin-bottom: 1rem;">No hay productos en esta categoría</h3>
+        <p>Prueba con otra categoría o <a href="#" class="reset-filter" style="color: var(--color-primary); text-decoration: underline;">ver todos los productos</a></p>
+      </div>
+    `;
+
+    document.querySelector('.products-grid').appendChild(emptyMessage);
+    document.querySelector('.reset-filter').addEventListener('click', function(e) {
+      e.preventDefault();
+      filterSelect.value = 'all'; // Cambia el valor del select a "all"
+      filterSelect.dispatchEvent(new Event('change')); // Dispara el evento change
+    });
   }
+}
+
 });
 </script>
 
