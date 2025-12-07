@@ -751,9 +751,10 @@
     <!-- Grid de Productos -->
     {% if collections.alquiler.products.size > 0 %}
       <div class="products-grid">
-      {% paginate collections.alquiler.products by 12 %}
+      {% paginate collections.alquiler.products by 9 %}
         {% for product in collections.alquiler.products %}
           {% assign product_type = product.type | handleize %}
+          {% assign filter = request.params.filter %}
           <div class="product-card" data-product-type="{{ product_type }}">
             <!-- El resto del código del producto permanece igual -->
             <a href="{{ product.url }}">
@@ -858,82 +859,77 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  /* ===== FILTRADO MEJORADO ===== */
-  
   const filterSelect = document.getElementById('catalog-filter');
-  const productCards = document.querySelectorAll('.product-card');
+  const sortSelect = document.getElementById('catalog-sort');
 
-  
-filterSelect.addEventListener('change', function() {
-  const filter = this.value;
-  let visibleCount = 0;
+  // Leer parámetros de la URL al cargar la página
+  const urlParams = new URLSearchParams(window.location.search);
+  const filterParam = urlParams.get('filter');
+  const sortParam = urlParams.get('sort_by');
 
-  productCards.forEach(card => {
-    const type = card.getAttribute('data-product-type');
-    const shouldShow = filter === 'all' || filter === type;
+  // Seleccionar el filtro y ordenamiento según los parámetros de la URL
+  if (filterParam) {
+    filterSelect.value = filterParam;
+  }
+  if (sortParam) {
+    sortSelect.value = sortParam;
+  }
 
-    if (shouldShow) {
-      card.style.display = 'block';
-      setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'scale(1)';
-      }, 50);
-      visibleCount++;
-    } else {
-      card.style.opacity = '0';
-      card.style.transform = 'scale(0.8)';
-      setTimeout(() => {
-        card.style.display = 'none';
-      }, 300);
-    }
+  // Evento change del filtro
+  filterSelect.addEventListener('change', function() {
+    const filter = this.value;
+    const sort = sortSelect.value;
+    window.location.href = `/collections/alquiler?page=1&filter=${filter}&sort_by=${sort}`;
   });
 
-  showEmptyState(visibleCount);
-});
+  // Evento change del ordenamiento
+  sortSelect.addEventListener('change', function() {
+    const sort = this.value;
+    const filter = filterSelect.value;
+    window.location.href = `/collections/alquiler?page=1&filter=${filter}&sort_by=${sort}`;
+  });
 
-
-  /* ===== ORDENAMIENTO ACTUALIZADO ===== */
-  const sortSelect = document.getElementById('catalog-sort');
-  if (sortSelect) {
-    sortSelect.addEventListener('change', function() {
-      // Usar la colección ALQUILER en lugar de ALL
-      window.location.href = `/collections/alquiler?sort_by=${this.value}`;
-    });
-
-    // Mantener el orden seleccionado
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentSort = urlParams.get('sort_by');
-    if (currentSort) sortSelect.value = currentSort;
-  }
-
-  /* ===== FUNCIÓN PARA ESTADO VACÍO ===== */
-
-  function showEmptyState(visibleCount) {
-  const existingMessage = document.querySelector('.no-products-message');
-  if (existingMessage) existingMessage.remove();
-
-  if (visibleCount === 0) {
-    const emptyMessage = document.createElement('div');
-    emptyMessage.className = 'no-products-message';
-    emptyMessage.innerHTML = `
-      <div style="text-align: center; padding: 3rem; color: #64748b;">
-        <div style="font-size: 4rem; margin-bottom: 1rem;"></div>
-        <h3 style="color: #475569; margin-bottom: 1rem;">No hay productos en esta categoría</h3>
-        <p>Prueba con otra categoría o <a href="#" class="reset-filter" style="color: var(--color-primary); text-decoration: underline;">ver todos los productos</a></p>
-      </div>
-    `;
-
-    document.querySelector('.products-grid').appendChild(emptyMessage);
-    document.querySelector('.reset-filter').addEventListener('click', function(e) {
+  // Manejar clics en los enlaces de paginación
+  document.querySelectorAll('.pagination a').forEach(link => {
+    link.addEventListener('click', function(e) {
       e.preventDefault();
-      filterSelect.value = 'all'; // Cambia el valor del select a "all"
-      filterSelect.dispatchEvent(new Event('change')); // Dispara el evento change
-    });
-  }
-}
+      const url = new URL(this.href);
+      const filter = filterSelect.value;
+      const sort = sortSelect.value;
 
+      // Añadir parámetros de filtro y ordenamiento a la URL de paginación
+      url.searchParams.set('filter', filter);
+      url.searchParams.set('sort_by', sort);
+
+      window.location.href = url.toString();
+    });
+  });
+
+  // Función para mostrar estado vacío
+  function showEmptyState(visibleCount) {
+    const existingMessage = document.querySelector('.no-products-message');
+    if (existingMessage) existingMessage.remove();
+    if (visibleCount === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'no-products-message';
+      emptyMessage.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: #64748b;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;"></div>
+          <h3 style="color: #475569; margin-bottom: 1rem;">No hay productos en esta categoría</h3>
+          <p>Prueba con otra categoría o <a href="#" class="reset-filter" style="color: var(--color-primary); text-decoration: underline;">ver todos los productos</a></p>
+        </div>
+      `;
+      document.querySelector('.products-grid').appendChild(emptyMessage);
+      document.querySelector('.reset-filter').addEventListener('click', function(e) {
+        e.preventDefault();
+        filterSelect.value = 'all';
+        filterSelect.dispatchEvent(new Event('change'));
+      });
+    }
+  }
 });
 </script>
+
 
 {% schema %}
 {
