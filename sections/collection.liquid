@@ -697,25 +697,7 @@
 
     <!-- Header Mejorado -->
     <div class="catalog-header">
-      {% if collection.handle == 'alquiler' %}
-        <div class="catalog-badge">Servicio de Alquiler 12345677990987776</div>
-          <h1>Equipos Profesionales en Alquiler</h1>
-          <p class="catalog-subtitle">
-            Soluciones profesionales de audio e iluminación disponibles para alquiler. Perfecto para eventos, producciones y proyectos temporales.
-          </p>
-      {% elsif collection.handle == 'venta' %}
-        <div class="catalog-badge">Catálogo de Venta</div>
-        <h1>Equipos Profesionales en Venta</h1>
-        <p class="catalog-subtitle">
-          Descubre nuestros productos disponibles para compra. Equipos profesionales de audio e iluminación para tus proyectos.
-        </p>
-      {% else %}
-        <div class="catalog-badge">{{ collection.title }}</div>
-          <h1>{{ collection.title }}</h1>
-          <p class="catalog-subtitle">
-            {{ collection.description }}
-         </p>
-      {% endif %}
+
 
 
      <!-- Toolbar Mejorada -->
