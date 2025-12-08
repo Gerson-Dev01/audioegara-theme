@@ -1,9 +1,0 @@
-{
-  "sections": {
-    "main": {
-      "type": "catalogo-venta",
-      "settings": {}
-    }
-  },
-  "order": ["main"]
-}
