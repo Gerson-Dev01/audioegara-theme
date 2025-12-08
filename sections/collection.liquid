@@ -704,57 +704,41 @@
         Perfecto para eventos, producciones y proyectos temporales.
       </p>
 
-    <!--  <div class="catalog-stats">
-        <div class="stat-item">
-          <span class="stat-number">{{ collections.alquiler.products_count }}</span>  
-          <span class="stat-label">Productos en Alquiler</span>
+     <!-- Toolbar Mejorada -->
+      <div class="catalog-toolbar">
+        <div class="catalog-filters">
+          <select class="filter-select" id="catalog-filter">
+            <option value="all" selected>Todos</option>
+            <option value="microfono">Micrófonos</option>
+            <option value="mezcladora">Mezcladoras</option>
+            <option value="altavoz">Altavoces</option>
+            <option value="amplificador">Amplificadores</option>
+            <option value="iluminacion">Iluminación</option>
+          </select>
         </div>
-        <div class="stat-item">
-          <span class="stat-number">{{ collections.alquiler.all_vendors | size }}+</span>
-          <span class="stat-label">Marcas Disponibles</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">100%</span>
-          <span class="stat-label">Equipos Certificados</span>
+
+        <div class="catalog-sort">
+          <span class="sort-label">Ordenar por:</span>
+            <select class="sort-select" id="SortBy" name="sort_by">
+              <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Recomendados</option>
+              <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Más Solicitados</option>
+              <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Nombre A-Z</option>
+              <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Nombre Z-A</option>
+              <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Precio: Menor a Mayor</option>
+              <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Precio: Mayor a Menor</option>
+              <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Nuevos Primero</option>
+            </select>
         </div>
       </div>
-    </div> -->
-
-    <!-- Toolbar Mejorada -->
-    <div class="catalog-toolbar">
-      <div class="catalog-filters">
-        <select class="filter-select" id="catalog-filter">
-          <option value="all" selected>Todos para Alquiler</option>
-          <option value="microfono">Micrófonos</option>
-          <option value="mezcladora">Mezcladoras</option>
-          <option value="altavoz">Altavoces</option>
-          <option value="amplificador">Amplificadores</option>
-          <option value="iluminacion">Iluminación</option>
-        </select>
-      </div>
-
-
-      <div class="catalog-sort">
-        <span class="sort-label">Ordenar por:</span>
-        <select class="sort-select" id="catalog-sort">
-          <option value="manual">Recomendados</option>
-          <option value="best-selling">Más Solicitados</option>
-          <option value="title-ascending">Nombre A-Z</option>
-          <option value="title-descending">Nombre Z-A</option>
-          <option value="price-ascending">Precio: Menor a Mayor</option>
-          <option value="price-descending">Precio: Mayor a Menor</option>
-          <option value="created-descending">Nuevos Primero</option>
-        </select>
-      </div>
-    </div>
 
     <!-- Grid de Productos -->
+    {% assign filter = request.params.filter %}
     {% if collection.products.size > 0 %}
       <div class="products-grid">
       {% paginate collection.products by 9 %}
         {% for product in collection.products %}
           {% assign product_type = product.type | handleize %}
-          {% assign filter = request.params.filter %}
+          {% if filter == blank or filter == 'all' or filter == product_type %}
           <div class="product-card" data-product-type="{{ product_type }}">
             <!-- El resto del código del producto permanece igual -->
             <a href="{{ product.url }}">
@@ -860,7 +844,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const filterSelect = document.getElementById('catalog-filter');
-  const sortSelect = document.getElementById('catalog-sort');
+  const sortSelect = document.getElementById('SortBy');
   const productCards = document.querySelectorAll('.product-card');
 
   // Leer parámetros de la URL al cargar la página
@@ -871,50 +855,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Seleccionar el filtro y ordenamiento según los parámetros de la URL
   if (filterParam) {
     filterSelect.value = filterParam;
-    filterProducts(filterParam);
   }
-  if (sortParam) {
+  if (sortParam && sortSelect) {
     sortSelect.value = sortParam;
   }
-
-  // Función para filtrar productos sin recargar la página
-  function filterProducts(filter) {
-    let visibleCount = 0;
-    productCards.forEach(card => {
-      const type = card.getAttribute('data-product-type');
-      const shouldShow = filter === 'all' || filter === type;
-      if (shouldShow) {
-        card.style.display = 'block';
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'scale(1)';
-        }, 50);
-        visibleCount++;
-      } else {
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-          card.style.display = 'none';
-        }, 300);
-      }
-    });
-    showEmptyState(visibleCount);
-  }
+ 
 
   // Evento change del filtro
   filterSelect.addEventListener('change', function() {
     const filter = this.value;
-    filterProducts(filter);
-    // Actualizar la URL sin recargar la página
-    updateURL('filter', filter);
+    const url = new URL(window.location.href);
+    url.searchParams.set('filter', filter);
+    url.searchParams.delete('page'); // Reinicia a la primera página
+    window.location.href = url.toString(); // Recarga la página con el filtro aplicado
   });
 
-  // Evento change del ordenamiento
-  sortSelect.addEventListener('change', function() {
-    const sort = this.value;
-    // Redirigir a la primera página con el ordenamiento aplicado
-    window.location.href = `/collections/alquiler?sort_by=${sort}`;
-  });
 
   // Manejar clics en los enlaces de paginación
   document.querySelectorAll('.pagination a').forEach(link => {
@@ -930,36 +885,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Función para actualizar la URL sin recargar la página
-  function updateURL(param, value) {
-    const url = new URL(window.location.href);
-    url.searchParams.set(param, value);
-    window.history.pushState({}, '', url.toString());
-  }
 
-  // Función para mostrar estado vacío
-  function showEmptyState(visibleCount) {
-    const existingMessage = document.querySelector('.no-products-message');
-    if (existingMessage) existingMessage.remove();
-    if (visibleCount === 0) {
-      const emptyMessage = document.createElement('div');
-      emptyMessage.className = 'no-products-message';
-      emptyMessage.innerHTML = `
-        <div style="text-align: center; padding: 3rem; color: #64748b;">
-          <div style="font-size: 4rem; margin-bottom: 1rem;"></div>
-          <h3 style="color: #475569; margin-bottom: 1rem;">No hay productos en esta categoría</h3>
-          <p>Prueba con otra categoría o <a href="#" class="reset-filter" style="color: var(--color-primary); text-decoration: underline;">ver todos los productos</a></p>
-        </div>
-      `;
-      document.querySelector('.products-grid').appendChild(emptyMessage);
-      document.querySelector('.reset-filter').addEventListener('click', function(e) {
-        e.preventDefault();
-        filterSelect.value = 'all';
-        filterProducts('all');
-        updateURL('filter', 'all');
-      });
-    }
-  }
 });
 </script>
 
@@ -967,12 +893,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {% schema %}
 {
-  "name": "Catálogo Completo",
+  "name": "collection",
   "settings": [],
   "presets": [
     {
-      "name": "Catálogo Completo",
-      "category": "Productos"
+      "name": "Collection sells",
+      "category": "Venta"
     }
   ]
 }
