@@ -749,10 +749,10 @@
     </div>
 
     <!-- Grid de Productos -->
-    {% if collections.alquiler.products.size > 0 %}
+    {% if collections.venta.products.size > 0 %}
       <div class="products-grid">
-      {% paginate collections.alquiler.products by 9 %}
-        {% for product in collections.alquiler.products %}
+      {% paginate collections.venta.products by 9 %}
+        {% for product in collections.venta.products %}
           {% assign product_type = product.type | handleize %}
           {% assign filter = request.params.filter %}
           <div class="product-card" data-product-type="{{ product_type }}">
