@@ -694,14 +694,13 @@
 <section id="rental-section">
 <div class="catalog-page">
   <div class="catalog-container">
+    <!-- Header Mejorado -->
+    <div class="catalog-header">
       <div class="catalog-badge">Servicio de {{ collection.title }}</div>
       <h1>Equipos Profesionales en {{ collection.title }}</h1>
       <p class="catalog-subtitle">
         {{ collection.description }}
       </p>
-
-    <!-- Header Mejorado -->
-    <div class="catalog-header">
       <!-- Toolbar Mejorada -->
       <div class="catalog-toolbar">
         <div class="catalog-filters">
@@ -764,7 +763,7 @@
 
                 <div class="product-badges">
                   <!-- Agrega badge específico para alquiler -->
-                  <div class="product-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">En</div>
+                  <div class="product-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">{{ collection.title }}</div>
                   
                   {% if product.compare_at_price > product.price %}
                     <div class="product-badge badge-sale">OFERTA ESPECIAL</div>
