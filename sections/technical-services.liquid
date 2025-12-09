@@ -331,9 +331,10 @@
     <div class="tech-contact">
       <h3 class="contact-title">¿Necesitas un presupuesto para tu evento?</h3>
       <p class="contact-description">Nuestro equipo de expertos está disponible para convertir tu evento en una experiencia inolvidable. Soluciones completas en sonido, iluminación y producción técnica.</p>
-      <a href="{{ section.settings.contact_link }}" class="contact-button">
+      <a href="{{ section.settings.contact_link }}?reason={{ section.settings.contact_reason | url_encode }}" class="contact-button">
         {{ section.settings.contact_button_text }}
       </a>
+
     </div>
   </div>
 </section>
@@ -352,7 +353,14 @@
     {
       "type": "url",
       "id": "contact_link",
-      "label": "Enlace de contacto"
+      "label": "Enlace de contacto",
+      "default": "/pages/contacto"
+    },
+    {
+      "type": "text",
+      "id": "contact_reason",
+      "label": "Razón del contacto",
+      "default": "Solicitud de presupuesto para evento"
     }
   ],
   "blocks": [
