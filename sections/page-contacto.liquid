@@ -402,6 +402,20 @@ Razón del contacto: {{ request.params.reason }}
   </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el parámetro 'reason' de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const reason = urlParams.get('reason');
+
+    // Si existe el parámetro, rellenar el textarea
+    if (reason) {
+      const textarea = document.getElementById('ContactFormMessage');
+      textarea.value = `Razón del contacto: ${reason}\n\n`;
+    }
+  });
+</script>
+
 
 {% schema %}
 {
