@@ -402,8 +402,10 @@ Razón del contacto: {{ request.params.reason }}
   </div>
 </section>
 
+
+{% schema %}
 {
-  "name": "Pagina Contacto",
+  "name": "Contacto",
   "settings": [
     {
       "type": "text",
@@ -541,3 +543,5 @@ Razón del contacto: {{ request.params.reason }}
     }
   ]
 }
+
+{% endschema %}
