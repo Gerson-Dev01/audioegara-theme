@@ -327,46 +327,56 @@
     </div>
     
     <div class="ae-contact-form-container">
-  <h3 class="ae-form-title">Envíanos un mensaje</h3>
-  {% form 'contact' %}
-    {% if form.posted_successfully? %}
-      <p class="ae-form-success">¡Gracias por tu mensaje! Te contactaremos pronto.</p>
-    {% endif %}
+      <h3 class="ae-form-title">Envíanos un mensaje</h3>
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <p class="ae-form-success">¡Gracias por tu mensaje! Te contactaremos pronto.</p>
+          {% endif %}
 
-    <!-- Campo oculto para la razón del contacto -->
-    {% if request.design_mode %}
-      <!-- Solo mostrar en el editor de Shopify -->
-      <input type="hidden" name="contact[subject]" id="contactSubject" value="">
-    {% else %}
-      <!-- Campo oculto en producción -->
-      <input type="hidden" name="contact[subject]" id="contactSubject" value="{{ request.params.reason | default: 'Consulta general' }}">
-    {% endif %}
+            <!-- Campo oculto para el asunto del correo -->
+          <input type="hidden" name="contact[subject]" value="[{{ request.params.reason | default: 'Consulta general' }}] {{ form.subject }}">
 
-    <div class="ae-contact-form">
-      <div class="ae-form-group">
-        <label for="ContactFormName">Nombre completo</label>
-        <input type="text" id="ContactFormName" name="contact[name]" required>
-      </div>
+          <!-- Campo oculto para incluir la razón en el cuerpo del mensaje -->
+          <input type="hidden" name="contact[body]" value="Razón del contacto: {{ request.params.reason | default: 'Consulta general' }}%0A%0A">
 
-      <div class="ae-form-group">
-        <label for="ContactFormEmail">Correo electrónico</label>
-        <input type="email" id="ContactFormEmail" name="contact[email]" required>
-      </div>
+          <div class="ae-contact-form">
+            <div class="ae-form-group">
+              <label for="ContactFormName">Nombre completo</label>
+              <input type="text" id="ContactFormName" name="contact[name]" required>
+            </div>
+            <div class="ae-form-group">
+              <label for="ContactFormEmail">Correo electrónico</label>
+              <input type="email" id="ContactFormEmail" name="contact[email]" required>
+            </div>
+            <div class="ae-form-group">
+              <label for="ContactFormPhone">Teléfono (con código de país, ej: +34)</label>
+              <input type="tel" id="ContactFormPhone" name="contact[phone]">
+            </div>
+            <div class="ae-form-group">
+              <label for="ContactFormMessage">Mensaje</label>
+              <textarea id="ContactFormMessage" name="contact[body]" required>
+                {% if request.params.reason %}
+                  Razón del contacto: {{ request.params.reason }}
 
-      <div class="ae-form-group">
-        <label for="ContactFormPhone">Teléfono</label>
-        <input type="tel" id="ContactFormPhone" name="contact[phone]">
-      </div>
+                {% endif %}
+              </textarea>
+            </div>
+          <button type="submit" class="ae-form-button">Enviar mensaje por correo</button>
+          </div>
+        {% endform %}
 
-      <div class="ae-form-group">
-        <label for="ContactFormMessage">Mensaje</label>
-        <textarea id="ContactFormMessage" name="contact[body]" required></textarea>
-      </div>
-
-      <button type="submit" class="ae-form-button">Enviar mensaje</button>
-    </div>
-  {% endform %}
+          <!-- Botón de WhatsApp -->
+        <a
+          href="https://wa.me/{{ section.settings.whatsapp_number | strip }}?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre:%20{{ request.params.reason | url_encode | default: 'un%20servicio' }}"
+          class="whatsapp-button"
+         target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.373 12.905c-.898-4.281-4.782-7.584-9.545-7.93C7.007 4 1.988 6.73 1.988 10.273c0 2.608 1.61 4.94 3.915 6.227l-1.642 4.434C3.33 20.83 4.71 22 6.6 22c5.503 0 11.727-5.682 12.777-12.023z" fill="currentColor"/>
+    </svg>
+    Contactar por WhatsApp
+  </a>
 </div>
+
 
 
   </div>
