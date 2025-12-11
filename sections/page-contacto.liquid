@@ -1,394 +1,405 @@
 {% style %}
-  /* Aislamiento de la sección de contacto */
+  /* Sección de contacto moderna */
   #contacto {
-    padding-top: 100px !important;
-    margin-top: -100px !important;
-    scroll-margin-top: 100px !important;
-    all: initial; /* Reset drástico */
-    display: block !important;
+    padding-top: 80px;
+    margin-top: -80px;
+    scroll-margin-top: 80px;
+    display: block;
   }
-  
+
   .ae-contact-section {
-    padding: 80px 20px !important;
-    background-color: #F7F7F7 !important;
-    position: relative !important;
-    font-family: 'Open Sans', sans-serif !important;
-    color: #333 !important;
-    box-sizing: border-box !important;
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    box-sizing: border-box;
   }
-  
+
   .ae-contact-container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 60px !important;
-  }
-  
-  .ae-contact-info {
-    padding: 30px !important;
-    display: block !important;
-  }
-  
-  .ae-contact-title {
-    font-size: 36px !important;
-    font-weight: 700 !important;
-    margin-bottom: 25px !important;
-    color: #333 !important;
-    position: relative !important;
-    display: block !important;
-    width: 100% !important;
-    font-family: 'Montserrat', sans-serif !important;
-  }
-  
-  .ae-contact-title:after {
-    content: "" !important;
-    position: absolute !important;
-    bottom: -12px !important;
-    left: 0 !important;
-    width: 80px !important;
-    height: 4px !important;
-    background-color: #51b1e4 !important;
-  }
-  
-  .ae-contact-description {
-    font-size: 18px !important;
-    color: #666 !important;
-    line-height: 1.6 !important;
-    margin-bottom: 40px !important;
-    display: block !important;
-    width: 100% !important;
-  }
-  
-  .ae-contact-details {
-    margin-bottom: 40px !important;
-    display: block !important;
-  }
-  
-  .ae-contact-detail {
-    display: flex !important;
-    align-items: flex-start !important;
-    margin-bottom: 25px !important;
-  }
-  
-  .ae-contact-icon {
-    margin-right: 15px !important;
-    min-width: 24px !important;
-    color: #51b1e4 !important;
-    margin-top: 4px !important;
-  }
-  
-  .ae-contact-detail-content h3 {
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    margin-bottom: 5px !important;
-    color: #333 !important;
-    display: block !important;
-  }
-  
-  .ae-contact-detail-content p,
-  .ae-contact-detail-content a {
-    font-size: 16px !important;
-    color: #555 !important;
-    text-decoration: none !important;
-    transition: color 0.3s ease !important;
-    display: block !important;
-  }
-  
-  .ae-contact-detail-content a:hover {
-    color: #51b1e4 !important;
-  }
-  
-  .ae-business-hours h3 {
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    margin-bottom: 15px !important;
-    color: #333 !important;
-    display: block !important;
-  }
-  
-  .ae-business-hours p {
-    font-size: 16px !important;
-    color: #555 !important;
-    margin-bottom: 8px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-  }
-  
-  .ae-business-hours span {
-    font-weight: 500 !important;
-  }
-  
-  .ae-contact-form-container {
-    background: white !important;
-    border-radius: 16px !important;
-    padding: 40px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
-  }
-  
-  .ae-form-title {
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    margin-bottom: 25px !important;
-    color: #333 !important;
-    display: block !important;
-  }
-  
-  .ae-contact-form {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-  
-  .ae-form-group {
-    margin-bottom: 15px !important;
-    display: block !important;
-  }
-  
-  .ae-form-group label {
-    display: block !important;
-    margin-bottom: 8px !important;
-    font-weight: 500 !important;
-    color: #555 !important;
-    font-size: 15px !important;
-  }
-  
-  .ae-form-group input,
-  .ae-form-group textarea {
-    width: 100% !important;
-    padding: 14px !important;
-    border: 1px solid #ddd !important;
-    border-radius: 8px !important;
-    font-size: 16px !important;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
-    display: block !important;
-    box-sizing: border-box !important;
-  }
-  
-  .ae-form-group input:focus,
-  .ae-form-group textarea:focus {
-    border-color: #51b1e4 !important;
-    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.1) !important;
-    outline: none !important;
-  }
-  
-  .ae-form-group textarea {
-    min-height: 150px !important;
-    resize: vertical !important;
-  }
-  
-  .ae-form-button {
-    background-color: #51b1e4 !important;
-    color: white !important;
-    border: none !important;
-    padding: 15px 30px !important;
-    border-radius: 8px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    width: 100% !important;
-    margin-top: 10px !important;
-    display: block !important;
-  }
-  
-  .ae-form-button:hover {
-    background-color: #51b1e4 !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3) !important;
-  }
-  
-  .ae-map-container {
-    margin-top: 60px !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
-    height: 400px !important;
-    display: block !important;
-  }
-  
-  .ae-map-container iframe {
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-    display: block !important;
-  }
-  
-  @media (max-width: 992px) {
-    .ae-contact-container {
-      grid-template-columns: 1fr !important;
-      gap: 40px !important;
-    }
-    
-    .ae-contact-info {
-      padding: 0 !important;
-    }
-    
-    .ae-contact-title:after {
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-    }
-    
-    .ae-contact-info,
-    .ae-contact-form-container {
-      text-align: center !important;
-    }
-    
-    .ae-contact-detail {
-      justify-content: center !important;
-    }
-    
-    .ae-business-hours p {
-      justify-content: center !important;
-      gap: 20px !important;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    #contacto {
-      padding-top: 80px !important;
-      margin-top: -80px !important;
-      scroll-margin-top: 80px !important;
-    }
-    
-    .ae-contact-section {
-      padding: 60px 15px !important;
-    }
-    
-    .ae-contact-title {
-      font-size: 28px !important;
-    }
-    
-    .ae-contact-description {
-      font-size: 16px !important;
-    }
-    
-    .ae-contact-form-container {
-      padding: 25px !important;
-    }
-    
-    .ae-map-container {
-      height: 300px !important;
-      margin-top: 40px !important;
-    }
-  }
-  .reason-display {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.reason-display p {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.whatsapp-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #25D366;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.whatsapp-button:hover {
-  background-color: #128C7E;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-}
-
-.whatsapp-button svg {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-@media (min-width: 768px) {
-  .ae-contact-form-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .ae-contact-info {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .ae-contact-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    display: inline-block;
+  }
+
+  .ae-contact-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #51b1e4;
+  }
+
+  .ae-contact-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .ae-contact-details {
+    margin-bottom: 30px;
+  }
+
+  .ae-contact-detail {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .ae-contact-icon {
+    margin-right: 15px;
+    min-width: 24px;
+    color: #51b1e4;
+    margin-top: 2px;
+    font-size: 20px;
+  }
+
+  .ae-contact-detail-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  .ae-contact-detail-content p,
+  .ae-contact-detail-content a {
+    font-size: 16px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .ae-contact-detail-content a:hover {
+    color: #51b1e4;
+  }
+
+  .ae-business-hours {
+    margin-top: 20px;
+  }
+
+  .ae-business-hours h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .ae-business-hours p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ae-business-hours span {
+    font-weight: 500;
+  }
+
+  .ae-contact-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .ae-form-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .ae-contact-form {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  .ae-form-button,
-  .whatsapp-button {
-    width: auto;
+  .ae-form-group {
+    margin-bottom: 15px;
   }
-}
 
+  .ae-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 15px;
+  }
+
+  .ae-form-group input,
+  .ae-form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ae-form-group input:focus,
+  .ae-form-group textarea:focus {
+    border-color: #51b1e4;
+    box-shadow: 0 0 0 2px rgba(81, 177, 228, 0.2);
+    outline: none;
+  }
+
+  .ae-form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .ae-form-button {
+    background-color: #51b1e4;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .ae-form-button:hover {
+    background-color: #3a9dd6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(81, 177, 228, 0.3);
+  }
+
+  .whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #25D366;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .whatsapp-button:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  }
+
+  .whatsapp-button svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  .ae-map-container {
+    margin-top: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 400px;
+  }
+
+  .ae-map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .reason-display {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .reason-display p {
+    margin: 0;
+    font-size: 15px;
+    color: #333;
+  }
+
+  @media (max-width: 992px) {
+    .ae-contact-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .ae-contact-info,
+    .ae-contact-form-container {
+      text-align: center;
+    }
+
+    .ae-contact-detail {
+      justify-content: center;
+    }
+
+    .ae-business-hours p {
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    #contacto {
+      padding-top: 60px;
+      margin-top: -60px;
+      scroll-margin-top: 60px;
+    }
+
+    .ae-contact-section {
+      padding: 40px 15px;
+    }
+
+    .ae-contact-title {
+      font-size: 26px;
+    }
+
+    .ae-contact-description {
+      font-size: 15px;
+    }
+
+    .ae-contact-form-container {
+      padding: 20px;
+    }
+
+    .ae-map-container {
+      height: 300px;
+      margin-top: 30px;
+    }
+  }
 {% endstyle %}
 
 <section id="contacto" class="ae-contact-section">
-<div class="ae-contact-form-container">
-  <h3 class="ae-form-title">Envíanos un mensaje</h3>
+  <div class="ae-contact-container">
+    <!-- Información de contacto -->
+    <div class="ae-contact-info">
+      <h2 class="ae-contact-title">{{ section.settings.titulo | default: "Contáctanos" }}</h2>
+      <p class="ae-contact-description">
+        {{ section.settings.descripcion | default: "Estamos aquí para ayudarte. Ponte en contacto con nosotros para cualquier consulta o servicio." }}
+      </p>
 
-  {% if request.params.reason %}
-    <div class="reason-display">
-      <p>Estás contactando por: <strong>{{ request.params.reason }}</strong></p>
+      <!-- Bloques de detalles de contacto -->
+      {% for block in section.blocks %}
+        {% if block.type == 'contacto' %}
+          <div class="ae-contact-detail">
+            <div class="ae-contact-icon">
+              {% if block.settings.icono == 'ubicacion' %}
+                📍
+              {% elsif block.settings.icono == 'telefono' %}
+                📞
+              {% elsif block.settings.icono == 'email' %}
+                ✉️
+              {% endif %}
+            </div>
+            <div class="ae-contact-detail-content">
+              <h3>{{ block.settings.titulo }}</h3>
+              {% if block.settings.enlace != blank %}
+                <a href="{{ block.settings.enlace }}">{{ block.settings.contenido }}</a>
+              {% else %}
+                <p>{{ block.settings.contenido }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <!-- Horario de atención -->
+      {% for block in section.blocks %}
+        {% if block.type == 'horario' %}
+          <div class="ae-business-hours">
+            <h3>Horario de atención</h3>
+            <p><span>{{ block.settings.dias }}:</span> {{ block.settings.horas }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
-  {% endif %}
 
-  {% form 'contact' %}
-    {% if form.posted_successfully? %}
-      <p class="ae-form-success">¡Gracias por tu mensaje! Te contactaremos pronto.</p>
-    {% endif %}
+    <!-- Formulario de contacto -->
+    <div class="ae-contact-form-container">
+      <h3 class="ae-form-title">Envíanos un mensaje</h3>
+      {% if request.params.reason %}
+        <div class="reason-display">
+          <p>Estás contactando por: <strong>{{ request.params.reason }}</strong></p>
+        </div>
+      {% endif %}
 
-    <div class="ae-contact-form">
-      <div class="ae-form-group">
-        <label for="ContactFormName">Nombre completo</label>
-        <input type="text" id="ContactFormName" name="contact[name]" required>
-      </div>
-      <div class="ae-form-group">
-        <label for="ContactFormEmail">Correo electrónico</label>
-        <input type="email" id="ContactFormEmail" name="contact[email]" required>
-      </div>
-      <div class="ae-form-group">
-        <label for="ContactFormPhone">Teléfono (con código de país, ej: +34)</label>
-        <input type="tel" id="ContactFormPhone" name="contact[phone]">
-      </div>
-      <div class="ae-form-group">
-        <label for="ContactFormMessage">Mensaje</label>
-        <textarea id="ContactFormMessage" name="contact[body]" required>
-{% if request.params.reason %}
-Razón del contacto: {{ request.params.reason }}
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p class="ae-form-success">¡Gracias por tu mensaje! Te contactaremos pronto.</p>
+        {% endif %}
 
-{% endif %}</textarea>
-      </div>
-      <!-- Campo oculto para el asunto -->
-      <input type="hidden" name="contact[subject]" value="{{ request.params.reason | default: 'Consulta general' }}">
+        <div class="ae-contact-form">
+          <div class="ae-form-group">
+            <label for="ContactFormName">Nombre completo</label>
+            <input type="text" id="ContactFormName" name="contact[name]" required>
+          </div>
+          <div class="ae-form-group">
+            <label for="ContactFormEmail">Correo electrónico</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" required>
+          </div>
+          <div class="ae-form-group">
+            <label for="ContactFormPhone">Teléfono (con código de país, ej: +34)</label>
+            <input type="tel" id="ContactFormPhone" name="contact[phone]">
+          </div>
+          <div class="ae-form-group">
+            <label for="ContactFormMessage">Mensaje</label>
+            <textarea id="ContactFormMessage" name="contact[body]" required></textarea>
+          </div>
+          <input type="hidden" name="contact[subject]" value="{{ request.params.reason | default: 'Consulta general' }}">
+        </div>
+
+        <button type="submit" class="ae-form-button">Enviar mensaje</button>
+      {% endform %}
+
+      <!-- Botón de WhatsApp -->
+      {% assign whatsapp_number = section.settings.whatsapp_number | default: '34600000000' %}
+      <a
+        href="https://wa.me/{{ whatsapp_number }}?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre:%20{{ request.params.reason | url_encode | default: 'un%20servicio' }}"
+        class="whatsapp-button"
+        target="_blank"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21.373 12.905c-.898-4.281-4.782-7.584-9.545-7.93C7.007 4 1.988 6.73 1.988 10.273c0 2.608 1.61 4.94 3.915 6.227l-1.642 4.434C3.33 20.83 4.71 22 6.6 22c5.503 0 11.727-5.682 12.777-12.023z" fill="currentColor"/>
+        </svg>
+        Contactar por WhatsApp
+      </a>
     </div>
-    <button type="submit" class="ae-form-button">Enviar mensaje por correo</button>
-  {% endform %}
+  </div>
 
-  <!-- Botón de WhatsApp -->
-  {% assign whatsapp_number = '34600000000' %}
-  <a
-    href="https://wa.me/{{ whatsapp_number }}?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre:%20{{ request.params.reason | url_encode | default: 'un%20servicio' }}"
-    class="whatsapp-button"
-    target="_blank"
-  >
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21.373 12.905c-.898-4.281-4.782-7.584-9.545-7.93C7.007 4 1.988 6.73 1.988 10.273c0 2.608 1.61 4.94 3.915 6.227l-1.642 4.434C3.33 20.83 4.71 22 6.6 22c5.503 0 11.727-5.682 12.777-12.023z" fill="currentColor"/>
-    </svg>
-    Contactar por WhatsApp
-  </a>
-</div>
-
-  
+  <!-- Mapa -->
   <div class="ae-map-container">
-    {% if section.settings.mapa_url %}
+    {% if section.settings.mapa_url != blank %}
       <iframe
         src="{{ section.settings.mapa_url }}"
         allowfullscreen=""
@@ -396,7 +407,7 @@ Razón del contacto: {{ request.params.reason }}
       ></iframe>
     {% else %}
       <div style="background: #e0e0e0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999;">
-        <p>Por favor, añade la URL del mapa en la configuración</p>
+        <p>Agrega la URL del mapa en la configuración de la sección.</p>
       </div>
     {% endif %}
   </div>
@@ -404,18 +415,14 @@ Razón del contacto: {{ request.params.reason }}
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Obtener el parámetro 'reason' de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const reason = urlParams.get('reason');
-
-    // Si existe el parámetro, rellenar el textarea
     if (reason) {
       const textarea = document.getElementById('ContactFormMessage');
       textarea.value = `Razón del contacto: ${reason}\n\n`;
     }
   });
 </script>
-
 
 {% schema %}
 {
@@ -436,7 +443,8 @@ Razón del contacto: {{ request.params.reason }}
     {
       "type": "url",
       "id": "mapa_url",
-      "label": "URL del mapa de Google Maps"
+      "label": "URL del mapa de Google Maps (ej: https://www.google.com/maps/embed?pb=...)",
+      "info": "Obtén el enlace de inserción de Google Maps: 1. Busca tu dirección en Google Maps, 2. Haz clic en 'Compartir', 3. Selecciona 'Insertar un mapa', 4. Copia el enlace."
     },
     {
       "type": "text",
@@ -485,7 +493,7 @@ Razón del contacto: {{ request.params.reason }}
         {
           "type": "url",
           "id": "enlace",
-          "label": "Enlace (opcional)"
+          "label": "Enlace (opcional, ej: tel:+34123456789 o mailto:contacto@ejemplo.com)"
         }
       ]
     },
@@ -526,8 +534,8 @@ Razón del contacto: {{ request.params.reason }}
           "settings": {
             "icono": "telefono",
             "titulo": "Teléfono",
-            "contenido": "+1 (555) 123-4567",
-            "enlace": "tel:+15551234567"
+            "contenido": "+34 123 456 789",
+            "enlace": "tel:+34123456789"
           }
         },
         {
@@ -557,5 +565,4 @@ Razón del contacto: {{ request.params.reason }}
     }
   ]
 }
-
 {% endschema %}
