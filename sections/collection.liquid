@@ -731,14 +731,22 @@
       </div>
     </div>
 
-    <!-- Grid de Productos -->
     {% assign filter = request.params.filter %}
-    {% if collection.products.size > 0 %}
+    {% assign filtered_products = '' | split: '' %}
+
+    {% for product in collection.products %}
+      {% assign product_type = product.type | handleize %}
+      {% if filter == blank or filter == 'all' or filter == product_type %}
+        {% assign filtered_products = filtered_products | push: product %}
+      {% endif %}
+    {% endfor %}
+
+    <!-- Grid de Productos -->
+    {% if filtered_products.size > 0 %}
       <div class="products-grid">
-      {% paginate collection.products by 9 %}
-        {% for product in collection.products %}
+      {% paginate filtered_products by 9 %}
+        {% for product in paginate.items %}
           {% assign product_type = product.type | handleize %}
-          {% if filter == blank or filter == 'all' or filter == product_type %}
           <div class="product-card" data-product-type="{{ product_type }}">
             <!-- El resto del código del producto permanece igual -->
             <a href="{{ product.url }}">
@@ -810,7 +818,6 @@
               </div>
             </div>
           </div>
-          {% endif %}
         {% endfor %}
         <!-- Controles de paginación -->
         <div class="pagination">
