@@ -76,7 +76,8 @@
     const filterParam = urlParams.get('filter');
 
     if (filterParam) {
-      filterSelect.value = "{{ collection.url }}?filter=" + filterParam;
+      const optionValue = "{{ collection.url }}?filter=" + filterParam;
+      filterSelect.value = optionValue;
     }
   });
 </script>
