@@ -7,11 +7,14 @@
 <div class="collection-container">
   <h1>{{ collection.title }}</h1>
 
+  <!-- Depuración: Verificar el valor del filtro -->
+  <p>Valor del filtro: {{ filter }}</p>
+
   <!-- Filtro por tipo de producto -->
   <div class="filters">
     <label for="product-type">Filtrar por tipo:</label>
     <select id="product-type" name="filter" onchange="window.location = this.value;">
-      <option value="{{ collection.url }}" {% if filter == blank or filter == nil %}selected{% endif %}>Todos</option>
+      <option value="{{ collection.url }}" {% unless filter %}selected{% endunless %}>Todos</option>
       {% assign product_types = '' | split: '' %}
       {% for product in collection.products %}
         {% assign product_type = product.type | handleize %}
@@ -27,9 +30,6 @@
 
   <!-- Depuración: Verificar productos en la colección -->
   <p>Total de productos en la colección: {{ collection.products.size }}</p>
-  {% if filter != blank and filter != nil %}
-    <p>Filtrando por tipo: {{ filter }}</p>
-  {% endif %}
 
   {% if collection.products.size > 0 %}
     <div class="product-grid">
@@ -54,6 +54,18 @@
     <p>No hay productos en esta colección.</p>
   {% endif %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterSelect = document.getElementById('product-type');
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+
+    if (filterParam) {
+      filterSelect.value = "{{ collection.url }}?filter=" + filterParam;
+    }
+  });
+</script>
 
 <style>
   .collection-container {
