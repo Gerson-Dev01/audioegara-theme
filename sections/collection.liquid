@@ -7,9 +7,6 @@
 <div class="collection-container">
   <h1>{{ collection.title }}</h1>
 
-  <!-- Depuración: Verificar el valor del filtro -->
-  <p>Valor del filtro: {{ filter }}</p>
-
   <!-- Filtro por tipo de producto -->
   <div class="filters">
     <label for="product-type">Filtrar por tipo:</label>
@@ -28,8 +25,8 @@
     </select>
   </div>
 
-  <!-- Depuración: Verificar productos en la colección -->
-  <p>Total de productos en la colección: {{ collection.products.size }}</p>
+  <!-- Depuración: Verificar el valor del filtro -->
+  <p>Valor del filtro: {{ filter }}</p>
 
   {% if collection.products.size > 0 %}
     <div class="product-grid">
