@@ -728,9 +728,21 @@
       </div>
     </div>
 
-    {% assign filter = request.params.filter %}
+{% assign filter = request.params.filter %}
+{% if filter == blank or filter == nil %}
+  {% assign filter = 'all' %}
+{% endif %}
 
-{% if filter == blank or filter == 'all' %}
+{% comment %} Depuración: Verificar productos en la colección {% endcomment %}
+<p>Total de productos en la colección: {{ collection.products.size }}</p>
+{% for product in collection.products %}
+  <p>{{ product.title }} (Tipo: {{ product.type | handleize }})</p>
+{% endfor %}
+
+{% comment %} Depuración: Verificar el valor del filtro {% endcomment %}
+<p>Valor del filtro: {{ filter | json }}</p>
+
+{% if filter == 'all' %}
   {% paginate collection.products by 9 %}
     <div class="products-grid">
       {% for product in paginate.items %}
