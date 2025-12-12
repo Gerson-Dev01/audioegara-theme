@@ -709,7 +709,7 @@
           <select class="filter-select" id="catalog-filter">
             <option value="all" selected>Todos</option>
             <option value="altavoces">Altavoces</option>
-            <option value="luces">Iluminación</option>
+            <option value="iluminacion">Iluminación</option>
           </select>
         </div>
 
@@ -729,14 +729,17 @@
     </div>
 
     {% assign filter = request.params.filter %}
-    {% assign filtered_products = '' | split: '' %}
 
-    {% for product in collection.products %}
-      {% assign product_type = product.type | handleize %}
-      {% if filter == blank or filter == 'all' or filter == product_type %}
-        {% assign filtered_products = filtered_products | push: product %}
-      {% endif %}
-    {% endfor %}
+    {% assign filtered_products = collection.products %}
+    {% if filter != 'all' and filter != blank %}
+      {% assign filtered_products = '' | split: '' %}
+      {% for product in collection.products %}
+        {% assign product_type = product.type | handleize %}
+        {% if filter == product_type %}
+          {% assign filtered_products = filtered_products | push: product %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
 
     <!-- Grid de Productos -->
     {% if filtered_products.size > 0 %}
