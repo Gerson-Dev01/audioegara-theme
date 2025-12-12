@@ -730,108 +730,137 @@
 
     {% assign filter = request.params.filter %}
 
-    {% assign filtered_products = collection.products %}
-    {% if filter != 'all' and filter != blank %}
-      {% assign filtered_products = '' | split: '' %}
-      {% for product in collection.products %}
+{% if filter == blank or filter == 'all' %}
+  {% paginate collection.products by 9 %}
+    <div class="products-grid">
+      {% for product in paginate.items %}
         {% assign product_type = product.type | handleize %}
-        {% if filter == product_type %}
-          {% assign filtered_products = filtered_products | push: product %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-
-    <!-- Grid de Productos -->
-    {% if filtered_products.size > 0 %}
-      <div class="products-grid">
-      {% paginate filtered_products by 9 %}
-        {% for product in paginate.items %}
-          {% assign product_type = product.type | handleize %}
-          <div class="product-card" data-product-type="{{ product_type }}">
-            <!-- El resto del código del producto permanece igual -->
-            <a href="{{ product.url }}">
-              <div class="product-image-container">
-                {% if product.featured_image %}
-                  <img 
-                    class="product-image" 
-                    src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" 
-                    alt="{{ product.featured_image.alt | escape }}"
-                    loading="lazy"
-                  >
-                {% else %}
-                  <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                    <div style="text-align: center; color: #94a3b8;">
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                        <polyline points="21 15 16 10 5 21"></polyline>
-                      </svg>
-                      <p style="margin-top: 8px; font-size: 0.875rem;">Imagen del Producto</p>
-                    </div>
+        <div class="product-card" data-product-type="{{ product_type }}">
+          <!-- Código del producto -->
+          <a href="{{ product.url }}">
+            <div class="product-image-container">
+              {% if product.featured_image %}
+                <img class="product-image" src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+              {% else %}
+                <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                  <div style="text-align: center; color: #94a3b8;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <p style="margin-top: 8px; font-size: 0.875rem;">Imagen del Producto</p>
                   </div>
-                {% endif %}
-
-                <div class="product-badges">
-                  <!-- Agrega badge específico para alquiler -->
-                  <div class="product-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">{{ collection.title }}</div>
-                  
-                  {% if product.compare_at_price > product.price %}
-                    <div class="product-badge badge-sale">OFERTA ESPECIAL</div>
-                  {% endif %}
-                  
-                  {% assign product_date = product.created_at | date: '%s' %}
-                  {% assign now_date = 'now' | date: '%s' %}
-                  {% assign difference = now_date | minus: product_date %}
-                  {% if difference < 2592000 %}
-                    <div class="product-badge badge-new">NUEVO</div>
-                  {% endif %}
                 </div>
-              </div>
-            </a>
-
-            <div class="product-info">
-              <!-- <div class="product-category">{{ product.vendor | default: "Audio Profesional" }}</div> -->
-              <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
-              <p class="product-description">
-                {{ product.description | strip_html | truncate: 120 | default: "Equipo profesional disponible para alquiler. Perfecto para eventos y producciones." }}
-              </p>
-
-              <div class="product-price">
-                <span class="current-price">Desde {{ product.price | money }}/día</span>
+              {% endif %}
+              <div class="product-badges">
+                <div class="product-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">{{ collection.title }}</div>
                 {% if product.compare_at_price > product.price %}
-                  <span class="original-price">{{ product.compare_at_price | money }}/día</span>
-                  <span class="price-saving">
-                    Ahorra {{ product.compare_at_price | minus: product.price | money }}
-                  </span>
+                  <div class="product-badge badge-sale">OFERTA ESPECIAL</div>
                 {% endif %}
-              </div>
-
-              <div class="product-actions">
-                <a href="{{ product.url }}" class="btn-details">
-                  <span>Ver Detalles</span>
-                </a>
-                <!-- <a href="/pages/contacto?product={{ product.handle }}&tipo=alquiler" class="btn-quote" title="Solicitar Alquiler">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                </a> -->
+                {% assign product_date = product.created_at | date: '%s' %}
+                {% assign now_date = 'now' | date: '%s' %}
+                {% assign difference = now_date | minus: product_date %}
+                {% if difference < 2592000 %}
+                  <div class="product-badge badge-new">NUEVO</div>
+                {% endif %}
               </div>
             </div>
+          </a>
+          <div class="product-info">
+            <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
+            <p class="product-description">
+              {{ product.description | strip_html | truncate: 120 | default: "Equipo profesional disponible para alquiler. Perfecto para eventos y producciones." }}
+            </p>
+            <div class="product-price">
+              <span class="current-price">Desde {{ product.price | money }}/día</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="original-price">{{ product.compare_at_price | money }}/día</span>
+                <span class="price-saving">Ahorra {{ product.compare_at_price | minus: product.price | money }}</span>
+              {% endif %}
+            </div>
+            <div class="product-actions">
+              <a href="{{ product.url }}" class="btn-details"><span>Ver Detalles</span></a>
+            </div>
           </div>
-        {% endfor %}
-        <!-- Controles de paginación -->
-        <div class="pagination">
-          {{ paginate | default_pagination }}
         </div>
-      {% endpaginate %}
-      </div>
-    {% else %}
-      <div class="catalog-empty">
-        <div class="empty-icon">📦</div>
-        <h3 style="color: #475569; margin-bottom: 1rem;">No hay productos disponibles para alquiler</h3>
-        <p style="color: #64748b;">Estamos actualizando nuestro inventario de alquiler. Vuelve pronto.</p>
-      </div>
+      {% endfor %}
+    </div>
+    <div class="pagination">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endpaginate %}
+{% else %}
+  {% assign filtered_products = '' | split: '' %}
+  {% for product in collection.products %}
+    {% assign product_type = product.type | handleize %}
+    {% if filter == product_type %}
+      {% assign filtered_products = filtered_products | push: product %}
     {% endif %}
+  {% endfor %}
+  {% if filtered_products.size > 0 %}
+    <div class="products-grid">
+      {% for product in filtered_products %}
+        {% assign product_type = product.type | handleize %}
+        <div class="product-card" data-product-type="{{ product_type }}">
+          <!-- Código del producto -->
+          <a href="{{ product.url }}">
+            <div class="product-image-container">
+              {% if product.featured_image %}
+                <img class="product-image" src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+              {% else %}
+                <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                  <div style="text-align: center; color: #94a3b8;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <p style="margin-top: 8px; font-size: 0.875rem;">Imagen del Producto</p>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="product-badges">
+                <div class="product-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">{{ collection.title }}</div>
+                {% if product.compare_at_price > product.price %}
+                  <div class="product-badge badge-sale">OFERTA ESPECIAL</div>
+                {% endif %}
+                {% assign product_date = product.created_at | date: '%s' %}
+                {% assign now_date = 'now' | date: '%s' %}
+                {% assign difference = now_date | minus: product_date %}
+                {% if difference < 2592000 %}
+                  <div class="product-badge badge-new">NUEVO</div>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
+            <p class="product-description">
+              {{ product.description | strip_html | truncate: 120 | default: "Equipo profesional disponible para alquiler. Perfecto para eventos y producciones." }}
+            </p>
+            <div class="product-price">
+              <span class="current-price">Desde {{ product.price | money }}/día</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="original-price">{{ product.compare_at_price | money }}/día</span>
+                <span class="price-saving">Ahorra {{ product.compare_at_price | minus: product.price | money }}</span>
+              {% endif %}
+            </div>
+            <div class="product-actions">
+              <a href="{{ product.url }}" class="btn-details"><span>Ver Detalles</span></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="catalog-empty">
+      <div class="empty-icon">📦</div>
+      <h3>No hay productos disponibles</h3>
+    </div>
+  {% endif %}
+{% endif %}
+
 
     <!-- Sección de Ayuda -->
     <div class="expert-help">
