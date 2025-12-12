@@ -1,27 +1,53 @@
 {% comment %}
-  collection.liquid - Plantilla básica para mostrar todos los productos de la colección sin paginación ni filtros.
+  collection.liquid - Plantilla para mostrar productos con filtros por tipo de producto.
 {% endcomment %}
+
+{% assign filter = request.params.filter %}
 
 <div class="collection-container">
   <h1>{{ collection.title }}</h1>
 
+  <!-- Filtro por tipo de producto -->
+  <div class="filters">
+    <label for="product-type">Filtrar por tipo:</label>
+    <select id="product-type" name="filter" onchange="window.location = this.value;">
+      <option value="{{ collection.url }}" {% if filter == blank %}selected{% endif %}>Todos</option>
+      {% assign product_types = '' | split: '' %}
+      {% for product in collection.products %}
+        {% assign product_type = product.type | handleize %}
+        {% unless product_types contains product_type or product_type == blank %}
+          {% assign product_types = product_types | push: product_type %}
+          <option value="{{ collection.url }}?filter={{ product_type }}" {% if filter == product_type %}selected{% endif %}>
+            {{ product.type | default: "Sin tipo" }}
+          </option>
+        {% endunless %}
+      {% endfor %}
+    </select>
+  </div>
+
   <!-- Depuración: Verificar productos en la colección -->
   <p>Total de productos en la colección: {{ collection.products.size }}</p>
+  {% if filter != blank %}
+    <p>Filtrando por tipo: {{ filter }}</p>
+  {% endif %}
 
   {% if collection.products.size > 0 %}
     <div class="product-grid">
       {% for product in collection.products %}
-        <div class="product-item">
-          <a href="{{ product.url }}">
-            <h3>{{ product.title }}</h3>
-            {% if product.featured_image %}
-              <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
-            {% else %}
-              <p>No hay imagen disponible</p>
-            {% endif %}
-            <p>{{ product.price | money }}</p>
-          </a>
-        </div>
+        {% assign product_type = product.type | handleize %}
+        {% if filter == blank or filter == product_type %}
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <h3>{{ product.title }}</h3>
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
+              {% else %}
+                <p>No hay imagen disponible</p>
+              {% endif %}
+              <p>{{ product.price | money }}</p>
+            </a>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
   {% else %}
@@ -34,6 +60,15 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+  }
+
+  .filters {
+    margin-bottom: 20px;
+  }
+
+  .filters select {
+    padding: 8px;
+    margin-left: 10px;
   }
 
   .product-grid {
