@@ -11,7 +11,7 @@
   <div class="filters">
     <label for="product-type">Filtrar por tipo:</label>
     <select id="product-type" name="filter" onchange="window.location = this.value;">
-      <option value="{{ collection.url }}" {% if filter == blank %}selected{% endif %}>Todos</option>
+      <option value="{{ collection.url }}" {% if filter == blank or filter == nil %}selected{% endif %}>Todos</option>
       {% assign product_types = '' | split: '' %}
       {% for product in collection.products %}
         {% assign product_type = product.type | handleize %}
@@ -27,7 +27,7 @@
 
   <!-- Depuración: Verificar productos en la colección -->
   <p>Total de productos en la colección: {{ collection.products.size }}</p>
-  {% if filter != blank %}
+  {% if filter != blank and filter != nil %}
     <p>Filtrando por tipo: {{ filter }}</p>
   {% endif %}
 
@@ -35,7 +35,7 @@
     <div class="product-grid">
       {% for product in collection.products %}
         {% assign product_type = product.type | handleize %}
-        {% if filter == blank or filter == product_type %}
+        {% if filter == blank or filter == nil or filter == product_type %}
           <div class="product-item">
             <a href="{{ product.url }}">
               <h3>{{ product.title }}</h3>
