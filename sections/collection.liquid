@@ -1,72 +1,31 @@
 {% comment %}
-  collection.liquid - Plantilla básica para mostrar productos con paginación y filtro por tipo de producto.
+  collection.liquid - Plantilla básica para mostrar todos los productos de la colección sin paginación ni filtros.
 {% endcomment %}
-
-{% assign filter = request.params.filter %}
 
 <div class="collection-container">
   <h1>{{ collection.title }}</h1>
 
-  <div class="filters">
-    <label for="product-type">Filtrar por tipo:</label>
-    <select id="product-type" name="filter" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-      <option value="{{ collection.url }}" {% if filter == blank %}selected{% endif %}>Todos</option>
-      {% assign product_types = '' | split: '' %}
+  <!-- Depuración: Verificar productos en la colección -->
+  <p>Total de productos en la colección: {{ collection.products.size }}</p>
+
+  {% if collection.products.size > 0 %}
+    <div class="product-grid">
       {% for product in collection.products %}
-        {% assign product_type = product.type | handleize %}
-        {% unless product_types contains product_type %}
-          {% assign product_types = product_types | push: product_type %}
-          <option value="{{ collection.url }}?filter={{ product_type }}" {% if filter == product_type %}selected{% endif %}>
-            {{ product.type }}
-          </option>
-        {% endunless %}
+        <div class="product-item">
+          <a href="{{ product.url }}">
+            <h3>{{ product.title }}</h3>
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
+            {% else %}
+              <p>No hay imagen disponible</p>
+            {% endif %}
+            <p>{{ product.price | money }}</p>
+          </a>
+        </div>
       {% endfor %}
-    </select>
-  </div>
-
-  {% if filter == blank %}
-    {% paginate collection.products by 12 %}
-      <div class="product-grid">
-        {% for product in paginate.items %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <h3>{{ product.title }}</h3>
-              {% if product.featured_image %}
-                <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
-              {% endif %}
-              <p>{{ product.price | money }}</p>
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-      {{ paginate | default_pagination }}
-    {% endpaginate %}
+    </div>
   {% else %}
-    {% assign filtered_products = '' | split: '' %}
-    {% for product in collection.products %}
-      {% assign product_type = product.type | handleize %}
-      {% if filter == product_type %}
-        {% assign filtered_products = filtered_products | push: product %}
-      {% endif %}
-    {% endfor %}
-
-    {% if filtered_products.size > 0 %}
-      <div class="product-grid">
-        {% for product in filtered_products %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <h3>{{ product.title }}</h3>
-              {% if product.featured_image %}
-                <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
-              {% endif %}
-              <p>{{ product.price | money }}</p>
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p>No hay productos disponibles para este filtro.</p>
-    {% endif %}
+    <p>No hay productos en esta colección.</p>
   {% endif %}
 </div>
 
@@ -75,15 +34,6 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-  }
-
-  .filters {
-    margin-bottom: 20px;
-  }
-
-  .filters select {
-    padding: 8px;
-    margin-left: 10px;
   }
 
   .product-grid {
@@ -101,10 +51,5 @@
   .product-item img {
     max-width: 100%;
     height: auto;
-  }
-
-  .pagination {
-    margin-top: 20px;
-    text-align: center;
   }
 </style>
