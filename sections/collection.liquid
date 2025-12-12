@@ -35,7 +35,21 @@
     <div class="product-grid">
       {% for product in collection.products %}
         {% assign product_type = product.type | handleize %}
-        {% if filter == blank or filter == nil or filter == product_type %}
+        {% if filter == blank or filter == nil %}
+          <!-- Mostrar todos los productos si no hay filtro seleccionado -->
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <h3>{{ product.title }}</h3>
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
+              {% else %}
+                <p>No hay imagen disponible</p>
+              {% endif %}
+              <p>{{ product.price | money }}</p>
+            </a>
+          </div>
+        {% elsif filter == product_type %}
+          <!-- Mostrar solo los productos que coinciden con el filtro seleccionado -->
           <div class="product-item">
             <a href="{{ product.url }}">
               <h3>{{ product.title }}</h3>
