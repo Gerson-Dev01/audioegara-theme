@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ shop.locale }}">
+<html class="no-js h-full" lang="{{ shop.locale }}">
 <head>
   <!-- Meta tags y enlaces a fuentes -->
   <meta charset="utf-8">
@@ -18,12 +18,19 @@
   {% render 'css-variables' %}
 
   {{ content_for_header }}
+
+  <!-- Estilo temporal para depurar -->
+  <style>
+    html {
+      height: 100%;
+    }
+  </style>
 </head>
 
-<body class="min-h-screen flex flex-col"> <!-- Clases clave: min-h-screen y flex flex-col -->
+<body class="min-h-screen flex flex-col">
   {% section 'header' %}
 
-  <main class="flex-grow"> <!-- Clase clave: flex-grow -->
+  <main class="flex-grow">
     {{ content_for_layout }}
   </main>
 
