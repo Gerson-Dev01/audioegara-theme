@@ -4,7 +4,8 @@ module.exports = {
     "./layout/*.liquid",
     "./templates/**/*.liquid",
     "./sections/**/*.liquid",
-    "./snippets/**/*.liquid"
+    "./snippets/**/*.liquid",
+    "./assets/**/*.css", // Asegúrate de incluir esto si usas CSS personalizado
   ],
   theme: {
     extend: {
