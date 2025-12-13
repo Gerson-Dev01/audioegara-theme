@@ -60,11 +60,11 @@
         </div>
 
         {% if collection.handle contains 'alquiler' %}
-          <a href="{{ product.url }}" class="product-button rent">
+          <a href="{{ product.url }}" class="btn btn-outline-primary w-full">
             Alquilar
           </a>
         {% else %}
-          <a href="{{ product.url }}" class="product-button buy">
+          <a href="{{ product.url }}" class="btn btn-black w-full">
             Comprar
           </a>
         {% endif %}
