@@ -1,0 +1,42 @@
+<div class="group rounded-lg border border-gray-200 bg-white shadow-sm transition hover:shadow-lg">
+
+  <!-- Imagen -->
+  <a href="{{ product.url }}" class="block aspect-square overflow-hidden rounded-t-lg bg-gray-100">
+    {% if product.featured_image %}
+      <img
+        src="{{ product.featured_image | img_url: '600x600' }}"
+        alt="{{ product.title }}"
+        class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+        loading="lazy"
+      >
+    {% endif %}
+  </a>
+
+  <!-- Info -->
+  <div class="flex flex-col gap-4 p-5">
+
+    <!-- Título -->
+    <h3 class="text-base font-semibold leading-tight">
+      <a href="{{ product.url }}" class="hover:text-primary transition">
+        {{ product.title }}
+      </a>
+    </h3>
+
+    <!-- Precio -->
+    <p class="text-lg font-bold">
+      {{ product.price | money }}
+    </p>
+
+    <!-- Botón -->
+    {% if collection.handle contains 'alquiler' %}
+      <a href="{{ product.url }}" class="btn btn-outline-primary w-full">
+        Alquilar
+      </a>
+    {% else %}
+      <a href="{{ product.url }}" class="btn btn-black w-full">
+        Comprar
+      </a>
+    {% endif %}
+
+  </div>
+</div>

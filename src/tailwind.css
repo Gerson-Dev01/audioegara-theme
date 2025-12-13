@@ -9,3 +9,27 @@
     background-color: #fff;
   }
 }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center
+           rounded-md px-5 py-3 text-sm font-semibold
+           transition-all duration-200;
+  }
+
+  .btn-outline-primary {
+    @apply border border-primary text-primary bg-white;
+  }
+
+  .btn-outline-primary:hover {
+    @apply bg-primary text-white;
+  }
+
+  .btn-black {
+    @apply bg-black text-white;
+  }
+
+  .btn-black:hover {
+    @apply bg-gray-900;
+  }
+}
