@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html class="no-js h-full" lang="{{ shop.locale }}">
+<html class="no-js" lang="{{ shop.locale }}">
 <head>
-  <!-- Meta tags y enlaces a fuentes -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fuentes -->
+  <!-- Fuente Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,16 +17,9 @@
   {% render 'css-variables' %}
 
   {{ content_for_header }}
-
-  <!-- Estilo temporal para depurar -->
-  <style>
-    html {
-      height: 100%;
-    }
-  </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body class="flex min-h-screen flex-col font-sans bg-white text-black">
   {% section 'header' %}
 
   <main class="flex-grow">
