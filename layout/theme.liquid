@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html class="no-js" lang="{{ shop.locale }}">
 <head>
+  <!-- Meta tags y enlaces a fuentes -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fuentes únicas para todo el tema -->
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Estilos críticos y CSS principal -->
+  <!-- Estilos -->
   {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
@@ -18,3 +19,14 @@
 
   {{ content_for_header }}
 </head>
+
+<body class="min-h-screen flex flex-col"> <!-- Clases clave: min-h-screen y flex flex-col -->
+  {% section 'header' %}
+
+  <main class="flex-grow"> <!-- Clase clave: flex-grow -->
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+</body>
+</html>
