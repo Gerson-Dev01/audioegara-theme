@@ -38,27 +38,41 @@
 
   {% paginate collection.products by 12 %}
     {% if collection.products.size > 0 %}
-      <div class="product-grid">
-        {% for product in collection.products %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <h3>{{ product.title }}</h3>
 
-              {% if product.featured_image %}
-                <img
-                  src="{{ product.featured_image | image_url: width: 300 }}"
-                  alt="{{ product.title }}"
-                  loading="lazy"
-                >
-              {% else %}
-                <p>No hay imagen disponible</p>
-              {% endif %}
+<div class="product-grid">
+  {% for product in collection.products %}
+    <div class="product-card">
+      <a href="{{ product.url }}" class="product-image-wrapper">
+        {% if product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url: width: 600 }}"
+            alt="{{ product.title }}"
+            loading="lazy"
+          >
+        {% endif %}
+      </a>
 
-              <p>{{ product.price | money }}</p>
-            </a>
-          </div>
-        {% endfor %}
+      <div class="product-info">
+        <h3 class="product-title">{{ product.title }}</h3>
+
+        <div class="product-price">
+          {{ product.price | money }}
+        </div>
+
+        {% if collection.handle contains 'alquiler' %}
+          <a href="{{ product.url }}" class="product-button rent">
+            Alquilar
+          </a>
+        {% else %}
+          <a href="{{ product.url }}" class="product-button buy">
+            Comprar
+          </a>
+        {% endif %}
       </div>
+    </div>
+  {% endfor %}
+</div>
+
 
       {% if paginate.pages > 1 %}
         <nav class="pagination">
@@ -80,46 +94,127 @@
 </div>
 
 <style>
-  .collection-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+.collection-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* CARD */
+.product-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* IMAGE */
+.product-image-wrapper {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* INFO */
+.product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.4;
+  min-height: 42px;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+/* BUTTON */
+.product-button {
+  margin-top: 8px;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.product-button.buy {
+  background: #111;
+  color: #fff;
+}
+
+.product-button.buy:hover {
+  background: #000;
+}
+
+.product-button.rent {
+  background: #2563eb;
+  color: #fff;
+}
+
+.product-button.rent:hover {
+  background: #1e4ed8;
+}
+
+/* PAGINATION */
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.pagination a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #111;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 14px;
   }
 
-  .filters {
-    margin-bottom: 20px;
+  .product-price {
+    font-size: 16px;
   }
+}
 
-  .filters label {
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  .filters select {
-    padding: 8px;
-  }
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-
-  .product-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .product-item img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .pagination {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 </style>
