@@ -11,31 +11,3 @@
     @apply font-sans;
   }
 }
-
-@layer components {
-  .btn {
-    @apply inline-flex items-center justify-center gap-2
-           px-5 py-3 rounded-md
-           font-semibold text-sm
-           transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-  }
-
-  /* Botón blanco con borde azul */
-  .btn-outline-primary {
-    @apply bg-white text-primary border border-primary;
-  }
-
-  .btn-outline-primary:hover {
-    @apply bg-primary text-white;
-  }
-
-  /* Botón negro sólido */
-  .btn-black {
-    @apply bg-black text-white;
-  }
-
-  .btn-black:hover {
-    @apply bg-gray-900;
-  }
-}
