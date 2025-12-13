@@ -5,7 +5,6 @@ module.exports = {
     "./templates/**/*.liquid",
     "./sections/**/*.liquid",
     "./snippets/**/*.liquid",
-    "./assets/**/*.css", // Asegúrate de incluir esto si usas CSS personalizado
   ],
   theme: {
     extend: {
