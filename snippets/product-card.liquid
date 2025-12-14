@@ -1,42 +1,40 @@
-<div class="group rounded-lg border border-gray-200 bg-white shadow-sm transition hover:shadow-lg">
+<div class="group border border-gray-200 rounded-xl overflow-hidden
+            transition-shadow duration-300 hover:shadow-lg bg-white">
 
   <!-- Imagen -->
-  <a href="{{ product.url }}" class="block aspect-square overflow-hidden rounded-t-lg bg-gray-100">
+  <a href="{{ product.url }}" class="block aspect-square bg-gray-50 overflow-hidden">
     {% if product.featured_image %}
       <img
-        src="{{ product.featured_image | img_url: '600x600' }}"
+        src="{{ product.featured_image | image_url: width: 600 }}"
         alt="{{ product.title }}"
-        class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         loading="lazy"
+        class="w-full h-full object-contain
+               transition-transform duration-300 group-hover:scale-105"
       >
     {% endif %}
   </a>
 
   <!-- Info -->
-  <div class="flex flex-col gap-4 p-5">
+  <div class="p-5 flex flex-col gap-4">
 
-    <!-- Título -->
-    <h3 class="text-base font-semibold leading-tight">
-      <a href="{{ product.url }}" class="hover:text-primary transition">
+    <h3 class="text-base font-medium leading-snug">
+      <a href="{{ product.url }}" class="hover:underline">
         {{ product.title }}
       </a>
     </h3>
 
-    <!-- Precio -->
-    <p class="text-lg font-bold">
+    <div class="text-lg font-semibold">
       {{ product.price | money }}
-    </p>
+    </div>
 
-    <!-- Botón -->
     {% if collection.handle contains 'alquiler' %}
-      <a href="{{ product.url }}" class="btn btn-outline-primary w-full">
+      <a href="{{ product.url }}" class="btn btn-outline-primary w-full mt-2">
         Alquilar
       </a>
     {% else %}
-      <a href="{{ product.url }}" class="btn btn-black w-full">
+      <a href="{{ product.url }}" class="btn btn-black w-full mt-2">
         Comprar
       </a>
     {% endif %}
-
   </div>
 </div>
