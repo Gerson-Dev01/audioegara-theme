@@ -4,7 +4,18 @@
 {% endcomment %}
 
 <div class="max-w-7xl mx-auto px-6 py-6">
-  <h1 class="text-3xl font-bold mb-6">{{ collection.title }}</h1>
+  <header class="text-center py-12 border-b border-gray-200 mb-10">
+    <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+      {{ collection.title }}
+    </h1>
+
+    {% if collection.description != blank %}
+      <p class="max-w-2xl mx-auto text-gray-600 text-base md:text-lg">
+        {{ collection.description }}
+      </p>
+    {% endif %}
+  </header>
+
 
   {%- if collection.filters.size > 0 -%}
     <div class="mb-6">
@@ -35,33 +46,16 @@
 
   {% paginate collection.products by 12 %}
     {% if collection.products.size > 0 %}
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="grid gap-8
+            grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-4">
         {% for product in collection.products %}
-          <div class="product-card">
-            <a href="{{ product.url }}" class="product-image-wrapper">
-              {% if product.featured_image %}
-                <img
-                  src="{{ product.featured_image | image_url: width: 600 }}"
-                  alt="{{ product.title }}"
-                  loading="lazy"
-                  class="w-full h-full object-contain transition-transform duration-300 hover:scale-105"
-                >
-              {% endif %}
-            </a>
-            <div class="product-info">
-              <h3 class="product-title">{{ product.title }}</h3>
-              <div class="product-price">{{ product.price | money }}</div>
-              {% if collection.handle contains 'alquiler' %}
-                <a href="{{ product.url }}" class="btn btn-outline-primary w-full">
-                  Alquilar
-                </a>
-              {% else %}
-                <a href="{{ product.url }}" class="btn btn-black w-full">
-                  Comprar
-                </a>
-              {% endif %}
-            </div>
-          </div>
+          {%  render 'product-card',
+              product: product,
+              collection: collection
+          %}
         {% endfor %}
       </div>
     {% else %}
