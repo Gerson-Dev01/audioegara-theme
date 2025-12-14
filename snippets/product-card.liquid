@@ -1,76 +1,65 @@
-<article
-  class="group relative flex flex-col
-         rounded-xl border border-gray-200 bg-white
-         transition-all duration-300
-         hover:shadow-xl">
-
-  <!-- Badge -->
-  <div class="absolute top-4 left-4 z-10">
-    {% if collection.handle contains 'alquiler' %}
-      <span class="inline-flex items-center
-                   rounded-full border border-primary
-                   bg-white px-3 py-1
-                   text-xs font-semibold uppercase tracking-wide text-primary">
-        Alquiler
-      </span>
-    {% else %}
-      <span class="inline-flex items-center
-                   rounded-full bg-black px-3 py-1
-                   text-xs font-semibold uppercase tracking-wide text-white">
-        Venta
-      </span>
-    {% endif %}
-  </div>
+<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm
+            transition hover:shadow-md">
 
   <!-- Imagen -->
-  <a href="{{ product.url }}"
-     class="relative block h-64 w-full overflow-hidden
-            rounded-t-xl bg-gray-50">
+  <div class="h-56 w-full">
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: width: 700 }}"
+          alt="{{ product.title }}"
+          loading="lazy"
+          class="mx-auto h-full object-contain"
+        >
+      {% endif %}
+    </a>
+  </div>
 
-    {% if product.featured_image %}
-      <img
-        src="{{ product.featured_image | image_url: width: 800 }}"
-        alt="{{ product.title }}"
-        loading="lazy"
-        class="h-full w-full object-contain
-               transition-transform duration-500
-               group-hover:scale-105"
-      >
-    {% endif %}
-  </a>
+  <!-- Contenido -->
+  <div class="pt-6">
 
-  <!-- Info -->
-  <div class="flex flex-1 flex-col p-5 text-center">
+    <!-- Badge -->
+    <div class="mb-4 flex items-center justify-between">
+      {% if collection.handle contains 'alquiler' %}
+        <span class="rounded bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+          Alquiler
+        </span>
+      {% else %}
+        <span class="rounded bg-black/10 px-2.5 py-0.5 text-xs font-medium text-black">
+          Venta
+        </span>
+      {% endif %}
+    </div>
 
     <!-- Título -->
-    <h3 class="mb-1 text-base font-semibold leading-snug">
-      <a href="{{ product.url }}"
-         class="hover:underline underline-offset-4">
-        {{ product.title }}
-      </a>
-    </h3>
+    <a href="{{ product.url }}"
+       class="text-lg font-semibold leading-tight text-gray-900 hover:underline">
+      {{ product.title }}
+    </a>
 
     <!-- Subtítulo -->
-    <p class="mb-4 text-sm text-gray-500">
+    <p class="mt-2 text-sm text-gray-500">
       Equipos profesionales para eventos
     </p>
 
-    <!-- Precio -->
-    <div class="mb-6 text-xl font-bold tracking-tight">
-      {{ product.price | money }}
+    <!-- Precio + CTA -->
+    <div class="mt-6 flex items-center justify-between gap-4">
+      <p class="text-2xl font-extrabold leading-tight text-gray-900">
+        {{ product.price | money }}
+      </p>
+
+      {% if collection.handle contains 'alquiler' %}
+        <a href="{{ product.url }}"
+           class="btn btn-outline-primary">
+          Alquilar
+        </a>
+      {% else %}
+        <a href="{{ product.url }}"
+           class="btn btn-black">
+          Comprar
+        </a>
+      {% endif %}
     </div>
 
-    <!-- CTA -->
-    {% if collection.handle contains 'alquiler' %}
-      <a href="{{ product.url }}"
-         class="btn btn-outline-primary mt-auto">
-        Alquilar ahora
-      </a>
-    {% else %}
-      <a href="{{ product.url }}"
-         class="btn btn-black mt-auto">
-        Comprar ahora
-      </a>
-    {% endif %}
   </div>
-</article>
+</div>
